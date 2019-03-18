@@ -2,15 +2,17 @@
   <section class="container">
     <div>
       <logo />
-      <h1 class="title">
-        bravado
-      </h1>
-      <h2 class="subtitle">
-        Hello everyone this is a challenge website.
-      </h2>
+      <h1 class="title">bravado</h1>
+      <h2 class="subtitle">BRAVADO HABIT TRACKER</h2>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green"
           >Documentation</a
+        >
+        <a
+          href="https://www.atilim.edu.tr/"
+          target="_blank"
+          class="button--green"
+          >atilim</a
         >
         <a
           href="https://github.com/nuxt/nuxt.js"
