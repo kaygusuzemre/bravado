@@ -6,7 +6,7 @@
         bravado
       </h1>
       <h2 class="subtitle">
-        habit-tracker and challenge manager in social way
+        Hello everyone this is a challenge website.
       </h2>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green"
