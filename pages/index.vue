@@ -22,7 +22,7 @@
                 :key="i"
               >
                 Reading Challange
-                <b-progress :value="100-i*10" max="100" show-progress animated></b-progress>
+                <b-progress :value="100-i*10" :max="100" show-progress animated></b-progress>
               </b-list-group-item>
             </b-list-group>
           </b-card>
@@ -87,7 +87,7 @@ body {
   background: #d9e9e9;
 }
 #promotion {
-  margin-top: -5vw;
+  margin-top: 1em;
   z-index: 1;
 }
 #footer {
