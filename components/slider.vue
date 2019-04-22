@@ -9,7 +9,7 @@
       img-height="480"
     >
       <b-carousel-slide caption="BRAVADO" caption-tag="h1" img-src="/slide1.jpg">
-        <h2>Habit tracking in social way {{windowWidth}}</h2>
+        <h2>Habit tracking in social way</h2>
         <b-row class="pt-5">
           <b-col lg="6" class="pb-3">
             <b-button :class="{'float-right': windowWidth > 1000}" size="lg">Login to Bravado</b-button>
@@ -33,6 +33,10 @@ export default {
 
 
 <style>
+#slider {
+  z-index: -1;
+  position: relative;
+}
 #slider h1 {
   font-size: 10vw;
 }
