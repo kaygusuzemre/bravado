@@ -1,4 +1,5 @@
 <template>
+
    <div >
 <b-container id="registerform">
 <p id="mainheader">BRAVADO Registeration</p>
@@ -14,7 +15,13 @@
 
 
    <div id="registerform">
-   <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+  
+
+  
+    <h1>Register Page</h1>
+
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
       <b-form-group
         id="input-group-1"
         label="Email address:"
@@ -31,12 +38,7 @@
       </b-form-group>
 
       <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          required
-          placeholder="Enter name"
-        ></b-form-input>
+        <b-form-input id="input-2" v-model="form.name" required placeholder="Enter name"></b-form-input>
       </b-form-group>
 
       <b-form-group id="input-group-3" label="Password:" label-for="input-3">
@@ -57,6 +59,7 @@
     
     
   </div>
+  
 </b-card>
 
 
@@ -88,6 +91,7 @@ export default {
     },
    
   }
+  
 </script>
 
 <style>
