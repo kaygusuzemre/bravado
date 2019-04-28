@@ -11,7 +11,9 @@
       <b-carousel-slide caption="BRAVADO" caption-tag="h1" img-src="/slide1.jpg">
         <h2>Habit tracking in social way</h2>
         <br>
-        <b-button size="lg">Login & Register Bravado</b-button>
+        <nuxt-link to="login-register">
+          <b-button size="lg">Login & Register Bravado</b-button>
+        </nuxt-link>
       </b-carousel-slide>
     </b-carousel>
   </section>
