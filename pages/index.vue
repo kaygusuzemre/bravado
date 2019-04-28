@@ -67,10 +67,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <div class="wave mt-5"></div>
-    <footer id="footer">
-      <center>Bravado 2019</center>
-    </footer>
   </div>
 </template>
 
@@ -83,42 +79,10 @@ export default {
 </script>
 
 <style>
-body {
-  background: #d9e9e9;
-}
 #promotion {
   z-index: 2;
   position: relative;
   margin-top: -20em;
-}
-#footer {
-  background: #7dbc9f;
-  color: white;
-  padding: 1em;
-}
-#features .card {
-  border-radius: 50%;
-  text-align: center;
-  padding: 0 5px 10px 5px;
-}
-
-.wave {
-  position: relative;
-}
-.wave::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-repeat: repeat;
-  height: 10px;
-  background-size: 20px 20px;
-  background-image: radial-gradient(
-    circle at 10px -5px,
-    transparent 12px,
-    #7dbc9f 13px
-  );
 }
 </style>
 

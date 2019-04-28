@@ -126,10 +126,6 @@ export default {
 </script>
 
 <style>
-body {
-  background: #d9e9e9;
-}
-
 #mainheader {
   font-size: 50px;
   text-align: center;
