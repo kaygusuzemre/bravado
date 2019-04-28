@@ -87,8 +87,9 @@ body {
   background: #d9e9e9;
 }
 #promotion {
-  margin-top: -5vw;
-  z-index: 1;
+  z-index: 2;
+  position: relative;
+  margin-top: -20em;
 }
 #footer {
   background: #7dbc9f;
