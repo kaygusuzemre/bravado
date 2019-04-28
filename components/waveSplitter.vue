@@ -32,8 +32,6 @@ export default {
 
 <style>
 #wave-splitter {
-  z-index: 2;
-  position: absolute;
-  margin-top: -8vw;
+  margin-top: -10vw;
 }
 </style>
