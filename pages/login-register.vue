@@ -12,7 +12,7 @@
               <b-form-group id="input-group-1" label="Email address:" label-for="input-email">
                 <b-form-input
                   id="input-email"
-                  v-model="form.email"
+                  v-model="login.email"
                   type="email"
                   required
                   placeholder="Enter email"
@@ -22,7 +22,7 @@
               <b-form-group id="input-group-3" label="Password:" label-for="input-pw">
                 <b-form-input
                   id="input-pw"
-                  v-model="form.Password"
+                  v-model="login.Password"
                   type="password"
                   required
                   placeholder="Password"
@@ -62,7 +62,7 @@
               <b-form-group id="input-group-2" label="Your Surname:" label-for="input-surName">
                 <b-form-input
                   id="input-surName"
-                  v-model="form.name"
+                  v-model="form.surName"
                   required
                   placeholder="Enter surname"
                 ></b-form-input>
@@ -79,32 +79,32 @@
               </b-form-group>
 
               <b-form-group label="Your gender">
-                <b-form-radio v-model="form.gender" name="some-radios" value="A">Male</b-form-radio>
-                <b-form-radio v-model="form.gender" name="some-radios" value="B">Female</b-form-radio>
+                <b-form-radio v-model="form.gender" name="some-radios" value="male">Male</b-form-radio>
+                <b-form-radio v-model="form.gender" name="some-radios" value="female">Female</b-form-radio>
               </b-form-group>
 
               <b-form-group id="input-group-3" label="Password:" label-for="input-pw1">
                 <b-form-input
                   id="input-pw1"
-                  v-model="form.Password"
+                  v-model="form.password"
                   type="password"
                   required
-                  placeholder="Enter name"
+                  placeholder="Enter Password"
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group id="input-group-3" label="Password gender:" label-for="input-pw2">
+              <b-form-group id="input-group-3" label="Password again:" label-for="input-pw2">
                 <b-form-input
                   id="input-pw2"
-                  v-model="form.Password"
+                  v-model="form.password2"
                   type="password"
                   required
-                  placeholder="Password gender"
+                  placeholder="Password again"
                 ></b-form-input>
               </b-form-group>
 
-              <b-button type="submit" variant="primary">Submit</b-button>
-              <b-button type="reset" variant="danger">Reset</b-button>
+              <b-button type="reset" variant="danger" class="float-left">Reset Form</b-button>
+              <b-button type="submit" variant="primary" class="float-right">Register</b-button>
             </b-form>
           </div>
         </b-col>
@@ -117,12 +117,17 @@
 export default {
   data() {
     return {
+      login:{
+       email:"",
+       password:""
+      },
       form: {
         email: '',
         name: '',
-        password: null,
+        surName:"",
+        password: "",
+        password2:"",
         gender: '',
-        checked: [],
         age: 0
       },
 
@@ -130,7 +135,15 @@ export default {
     }
   },
   methods: {
-    onReset: function() {},
+    onReset: function() {
+      this.form.email=""
+      this.form.name= ''
+      this.form.surName=""
+      this.form.password= ""
+      this.form.password2=""
+      this.form.gender= ''
+      this.form.age=0
+    },
     onSubmit: function() {}
   }
 }
