@@ -12,7 +12,7 @@
               <b-form-group id="input-group-1" label="Email address:" label-for="input-email">
                 <b-form-input
                   id="input-email"
-                  v-model="form.email"
+                  v-model="login.email"
                   type="email"
                   required
                   placeholder="Enter email"
@@ -22,7 +22,7 @@
               <b-form-group id="input-group-3" label="Password:" label-for="input-pw">
                 <b-form-input
                   id="input-pw"
-                  v-model="form.Password"
+                  v-model="login.Password"
                   type="password"
                   required
                   placeholder="Password"
@@ -117,6 +117,10 @@
 export default {
   data() {
     return {
+      login:{
+       email:"",
+       password:""
+      },
       form: {
         email: '',
         name: '',
