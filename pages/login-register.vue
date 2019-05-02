@@ -128,7 +128,6 @@ export default {
         password: "",
         password2:"",
         gender: '',
-        checked: [],
         age: 0
       },
 
@@ -136,7 +135,15 @@ export default {
     }
   },
   methods: {
-    onReset: function() {},
+    onReset: function() {
+      this.form.email=""
+      this.form.name= ''
+      this.form.surName=""
+      this.form.password= ""
+      this.form.password2=""
+      this.form.gender= ''
+      this.form.age=0
+    },
     onSubmit: function() {}
   }
 }
