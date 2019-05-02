@@ -13,7 +13,8 @@
     "precommit": "npm run lint",
     "test": "jest",
     "fix": "npm run lint -- --fix",
-    "setup": "node ./server/setup.js"
+    "setup": "node ./server/setup.js",
+    "docker": "docker-compose up -d"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
