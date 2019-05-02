@@ -62,7 +62,7 @@
               <b-form-group id="input-group-2" label="Your Surname:" label-for="input-surName">
                 <b-form-input
                   id="input-surName"
-                  v-model="form.name"
+                  v-model="form.surName"
                   required
                   placeholder="Enter surname"
                 ></b-form-input>
@@ -79,27 +79,27 @@
               </b-form-group>
 
               <b-form-group label="Your gender">
-                <b-form-radio v-model="form.gender" name="some-radios" value="A">Male</b-form-radio>
-                <b-form-radio v-model="form.gender" name="some-radios" value="B">Female</b-form-radio>
+                <b-form-radio v-model="form.gender" name="some-radios" value="male">Male</b-form-radio>
+                <b-form-radio v-model="form.gender" name="some-radios" value="female">Female</b-form-radio>
               </b-form-group>
 
               <b-form-group id="input-group-3" label="Password:" label-for="input-pw1">
                 <b-form-input
                   id="input-pw1"
-                  v-model="form.Password"
+                  v-model="form.password"
                   type="password"
                   required
-                  placeholder="Enter name"
+                  placeholder="Enter Password"
                 ></b-form-input>
               </b-form-group>
 
-              <b-form-group id="input-group-3" label="Password gender:" label-for="input-pw2">
+              <b-form-group id="input-group-3" label="Password again:" label-for="input-pw2">
                 <b-form-input
                   id="input-pw2"
-                  v-model="form.Password"
+                  v-model="form.password2"
                   type="password"
                   required
-                  placeholder="Password gender"
+                  placeholder="Password again"
                 ></b-form-input>
               </b-form-group>
 
@@ -124,7 +124,9 @@ export default {
       form: {
         email: '',
         name: '',
-        password: null,
+        surName:"",
+        password: "",
+        password2:"",
         gender: '',
         checked: [],
         age: 0
