@@ -11,7 +11,7 @@
       <hr>
       <span>My profile</span>
     </b-nav-item>
-    <b-nav-item href="/challanges">
+    <b-nav-item href="/challenges">
       <b-img src="/icons/svg/003-worlwide.svg" fluid/>
       <hr>
       <span>All challanges</span>
