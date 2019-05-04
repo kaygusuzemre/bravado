@@ -34,3 +34,10 @@
 
 
 <script>
+import bravadoNavigation from '~/components/bravadoNavigation.vue'
+
+export default {
+  layout: 'user',
+  components: { bravadoNavigation }
+}
+</script>
