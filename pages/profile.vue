@@ -16,8 +16,20 @@
           </b-card>
         </b-col>
         <b-col md="10">
-          <b-card border-variant="light" header="Stability" class="text-center">
-            <stability></stability>
+          <b-card border-variant="light" class="text-center">
+            <div slot="header" class="mb-0">
+              Stability by
+              <b-dropdown
+                id="dropdown-1"
+                :text="`year ${selectedYear}`"
+                size="sm"
+                variant="outline-secondary"
+              >
+                <b-dropdown-item @click="selectedYear= 2019">2019</b-dropdown-item>
+                <b-dropdown-item @click="selectedYear = 2018">2018</b-dropdown-item>
+              </b-dropdown>
+            </div>
+            <stability :year="selectedYear"></stability>
           </b-card>
         </b-col>
       </b-row>
@@ -37,6 +49,11 @@ import bravadoNavigation from '~/components/bravadoNavigation.vue'
 import stability from '~/components/stability.vue'
 export default {
   layout: 'user',
+  data() {
+    return {
+      selectedYear: 2019
+    }
+  },
   components: { bravadoNavigation, stability }
 }
 </script>

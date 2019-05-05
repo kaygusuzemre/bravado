@@ -14,6 +14,7 @@ Date.prototype.getWeekNumber = function() {
 }
 
 export default {
+  props: ['year'],
   data() {
     return {
       p5: null,
