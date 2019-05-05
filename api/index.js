@@ -1,5 +1,6 @@
 import express from 'express'
 import mysql from 'mysql'
+import md5 from 'md5'
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -24,11 +25,18 @@ router.use((req, res, next) => {
 
 // Add POST - /api/login
 router.post('/login', (req, res) => {
-  if (req.body.username === 'demo' && req.body.password === 'demo') {
-    req.session.authUser = { username: 'demo' }
-    return res.json({ username: 'demo' })
-  }
-  res.status(401).json({ message: 'Bad credentials' })
+  const { username, password } = req.body
+
+  connection.query(
+    'SELECT * FROM user WHERE email=? AND password=?',
+    [username, md5(password)],
+    function(error, results, fields) {
+      if (error) return res.status(500)
+      if (results.length === 0)
+        return res.status(401).json({ message: 'Bad credentials' })
+      else return res.json({ username: 'demo' })
+    }
+  )
 })
 
 // Add POST - /api/logout
