@@ -16,7 +16,45 @@
           </b-card>
         </b-col>
         <b-col md="2" align-self="center">
-          <NuxtLink to="/">Edit Profile</NuxtLink>
+          <b-button v-b-modal.modal-1>Edit Profile</b-button>
+
+          <b-modal id="modal-1" title="Change Account Settings">
+            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+              <b-form-group id="mail" label="Change Email address:" label-for="mail">
+                <b-form-input
+                  id="mail"
+                  v-model="form.email"
+                  type="email"
+                  required
+                  placeholder="Change email"
+                ></b-form-input>
+              </b-form-group>
+              <b-button type="submit" variant="primary">Change Email</b-button>
+              <hr>
+            </b-form>
+            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+              <b-form-group id="password" label="Change Password:" label-for="password">
+                <b-form-input
+                  id="password"
+                  v-model="form.password"
+                  type="password"
+                  required
+                  placeholder="Change Password"
+                ></b-form-input>
+
+                <hr>
+
+                <b-form-input
+                  id="passwordagain"
+                  v-model="form.password"
+                  type="password"
+                  required
+                  placeholder="Enter Password again"
+                ></b-form-input>
+              </b-form-group>
+              <b-button type="submit" variant="primary">Change Password</b-button>
+            </b-form>
+          </b-modal>
         </b-col>
         <b-col md="7" align-self="center">
           <b-card border-variant="light" header="Stability" class="text-center"></b-card>
@@ -38,6 +76,44 @@ import bravadoNavigation from '~/components/bravadoNavigation.vue'
 
 export default {
   layout: 'user',
-  components: { bravadoNavigation }
+  components: { bravadoNavigation },
+  data() {
+    return {
+      login: {
+        email: '',
+        password: ''
+      },
+      form: {
+        email: '',
+        name: '',
+        surName: '',
+        password: '',
+        password2: '',
+        gender: '',
+        age: 0
+      },
+
+      show: true
+    }
+  },
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault()
+      alert(JSON.stringify(this.form))
+    },
+    onReset(evt) {
+      evt.preventDefault()
+      // Reset our form values
+      this.form.email = ''
+      this.form.name = ''
+      this.form.food = null
+      this.form.checked = []
+      // Trick to reset/clear native browser form validation state
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
+    }
+  }
 }
 </script>
