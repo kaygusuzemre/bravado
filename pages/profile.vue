@@ -6,7 +6,7 @@
     <hr>
     <b-container id="profile" fluid>
       <b-row>
-        <b-col md="3">
+        <b-col md="2">
           <b-card border-variant="light" header="John doe" class="text-center">
             <img
               src="https://cdn.pixabay.com/photo/2017/02/23/13/05/profile-2092113_960_720.png"
@@ -15,49 +15,92 @@
             >
           </b-card>
         </b-col>
-        <b-col md="2" align-self="center">
-          <b-button v-b-modal.modal-1>Edit Profile</b-button>
+        <b-col md="1" align-self="center">
+        <b-button v-b-modal.modal-1>Edit Profile</b-button>
+        <b-modal id="modal-1" title="Change Account Settings">
+ 
 
-          <b-modal id="modal-1" title="Change Account Settings">
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-              <b-form-group id="mail" label="Change Email address:" label-for="mail">
-                <b-form-input
-                  id="mail"
-                  v-model="form.email"
-                  type="email"
-                  required
-                  placeholder="Change email"
-                ></b-form-input>
-              </b-form-group>
-              <b-button type="submit" variant="primary">Change Email</b-button>
-              <hr>
-            </b-form>
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-              <b-form-group id="password" label="Change Password:" label-for="password">
-                <b-form-input
-                  id="password"
-                  v-model="form.password"
-                  type="password"
-                  required
-                  placeholder="Change Password"
-                ></b-form-input>
+        
+      <b-form-group
+     
+    >
+      <b-form-group
+        label-cols-sm="4"
+        label="Name:"
+        label-align-sm="right"
+        label-for="nested-name"
+        
+      >
+        <b-form-input v-model="name" id="nested-name" placeholder="Enter name"></b-form-input>
+      </b-form-group>
 
-                <hr>
+      <b-form-group
+        label-cols-sm="4"
+        label="Surname:"
+        label-align-sm="right"
+        label-for="nested-surname"
+      >
+        <b-form-input v-model="surname" id="nested-surname" placeholder="Enter surname"></b-form-input>
+      </b-form-group>
 
-                <b-form-input
-                  id="passwordagain"
-                  v-model="form.password"
-                  type="password"
-                  required
-                  placeholder="Enter Password again"
-                ></b-form-input>
-              </b-form-group>
-              <b-button type="submit" variant="primary">Change Password</b-button>
-            </b-form>
-          </b-modal>
+      <b-form-group
+        label-cols-sm="4"
+        label="Email:"
+        label-align-sm="right"
+        label-for="nested-email"
+      >
+        <b-form-input v-model="email" id="nested-email" placeholder="Enter e-mail"></b-form-input>
+      </b-form-group>
+
+      <b-form-group
+        label-cols-sm="4"
+        label="Password:"
+        label-align-sm="right"
+        label-for="nested-password"
+      >
+        <b-form-input v-model="password" id="nested-password" type="password" placeholder="Enter password"></b-form-input>
+      </b-form-group>
+
+      <b-form-group
+        label-cols-sm="4"
+        label="Password Again:"
+        label-align-sm="right"
+        label-for="nested-password-again"
+      >
+        <b-form-input v-model="password2" id="nested-password-again" type="password" placeholder="Enter password again"></b-form-input>
+      </b-form-group>
+
+      <b-form-group
+        label-cols-sm="4"
+        label="Gender:"
+        label-align-sm="right" class="mb-0"
+      >
+        <b-form-radio-group
+          class="pt-2"
+          :options="['Male', 'Female']"
+          v-model="gender"
+        ></b-form-radio-group>
+      </b-form-group>
+    </b-form-group>
+        </b-modal>
+          
         </b-col>
-        <b-col md="7" align-self="center">
-          <b-card border-variant="light" header="Stability" class="text-center"></b-card>
+        <b-col md="9">
+          <b-card border-variant="light" class="text-center">
+            <div slot="header" class="mb-0">
+              Stability by
+              <b-dropdown
+                id="dropdown-1"
+                :text="`year ${selectedYear}`"
+                size="sm"
+                variant="outline-secondary"
+              >
+                <b-dropdown-item @click="selectedYear= 2019">2019</b-dropdown-item>
+                <b-dropdown-item @click="selectedYear = 2018">2018</b-dropdown-item>
+              </b-dropdown>
+            </div>
+            <stability :year="selectedYear"></stability>
+          </b-card>
         </b-col>
       </b-row>
       <hr>
@@ -73,47 +116,23 @@
 
 <script>
 import bravadoNavigation from '~/components/bravadoNavigation.vue'
-
+import stability from '~/components/stability.vue'
 export default {
   layout: 'user',
-  components: { bravadoNavigation },
   data() {
     return {
-      login: {
-        email: '',
-        password: ''
-      },
-      form: {
-        email: '',
-        name: '',
-        surName: '',
-        password: '',
-        password2: '',
-        gender: '',
-        age: 0
-      },
-
-      show: true
+      selectedYear: 2019,
+      
+     
     }
   },
-  methods: {
-    onSubmit(evt) {
-      evt.preventDefault()
-      alert(JSON.stringify(this.form))
-    },
-    onReset(evt) {
-      evt.preventDefault()
-      // Reset our form values
-      this.form.email = ''
-      this.form.name = ''
-      this.form.food = null
-      this.form.checked = []
-      // Trick to reset/clear native browser form validation state
-      this.show = false
-      this.$nextTick(() => {
-        this.show = true
-      })
-    }
-  }
+  components: { bravadoNavigation, stability },
+   methods: {
+      onSubmit(evt) {
+        evt.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+  
+}
 }
 </script>
