@@ -5,7 +5,10 @@
     </b-container>
     <hr>
     <b-card title="All challanges">
-      <b-card-text>A second paragraph of text in the card.</b-card-text>
+      <b-card-text>
+        If you can not find a challange which satisfies,
+        <nuxt-link to="/create-challenge">create a new challange</nuxt-link>
+      </b-card-text>
       <hr>
       <b-row>
         <b-col>
@@ -31,7 +34,7 @@
         </b-col>
         <b-col>
           <b-form class="mx-auto" inline>
-            <b-input placeholder="Write keywords then enter" class="w-100"></b-input>
+            <b-input placeholder="Write keywords to search then enter" class="w-100"></b-input>
           </b-form>
         </b-col>
       </b-row>
