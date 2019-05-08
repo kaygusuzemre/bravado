@@ -4,11 +4,11 @@
     <wave-splitter color="#d9e9e9"></wave-splitter>
     <b-container id="promotion">
       <b-row>
-        <b-col id="popularChallanges" md="5">
-          <b-card border-variant="light" header="Popular Challanges" class="text-center">
+        <b-col id="popularChallenges" md="5">
+          <b-card border-variant="light" header="Popular Challenges" class="text-center">
             <b-dropdown variant="outline-dark">
               <template slot="button-content">
-                Choose challange
+                Choose challenge
                 <strong>categories</strong>
               </template>
               <b-dropdown-item href="#">An item</b-dropdown-item>
@@ -21,7 +21,7 @@
                 v-for="(ob,i) in [0,1,2,3,4,5,6,7,8,9,10]"
                 :key="i"
               >
-                Reading Challange
+                Reading Challenge
                 <b-progress :value="100-i*10" :max="100" show-progress animated></b-progress>
               </b-list-group-item>
             </b-list-group>
@@ -30,7 +30,7 @@
         <b-col id="features" md="7">
           <b-card-group columns>
             <b-card img-src="/icons/svg/009-teamwork.svg" img-alt="Image" img-top>
-              <b-card-text>Challange with others</b-card-text>
+              <b-card-text>Challenge with others</b-card-text>
             </b-card>
 
             <b-card img-src="/icons/svg/006-target.svg" img-alt="Image" img-top>

@@ -4,10 +4,10 @@
       <bravado-navigation></bravado-navigation>
     </b-container>
     <hr>
-    <b-card title="All challanges">
+    <b-card title="All challenges">
       <b-card-text>
-        If you can not find a challange which satisfies,
-        <nuxt-link to="/create-challenge">create a new challange</nuxt-link>
+        If you can not find a challenge which satisfies,
+        <nuxt-link to="/create-challenge">create a new challenge</nuxt-link>
       </b-card-text>
       <hr>
       <b-row>
