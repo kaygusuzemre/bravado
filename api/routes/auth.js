@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 export default function(router) {
   router.post('/login', (req, res) => {
     // Login function
@@ -12,6 +14,11 @@ export default function(router) {
   })
 
   router.post('/register', (req, res) => {
-    // Register function
+    if (!validator.isEmail(req.body.email))
+    res.json({
+      status: 'error',
+      key: 'email',
+      msg: 'Email is not valid'
+    })
   })
 }
