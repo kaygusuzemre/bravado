@@ -17,11 +17,12 @@
               <b-button variant="outline-secondary">&laquo;</b-button>
               <b-button variant="outline-secondary">&lsaquo;</b-button>
             </b-button-group>
-            <b-button-group class="mx-auto">
-              <b-button variant="outline-primary">Populariry</b-button>
-              <b-button variant="outline-primary">Difficulty</b-button>
-              <b-button variant="outline-primary">Period</b-button>
-            </b-button-group>
+            <b-dropdown variant="outline-danger" class="mx-1" right text="Sort by">
+              <b-dropdown-item>Popularity</b-dropdown-item>
+              <b-dropdown-item>Difficulty</b-dropdown-item>
+              <b-dropdown-item>Period</b-dropdown-item>
+              <b-dropdown-item>A-Z</b-dropdown-item>
+            </b-dropdown>
             <b-dropdown variant="outline-danger" class="mx-1" right text="Filters">
               <b-dropdown-item>Finished</b-dropdown-item>
               <b-dropdown-item>Continuing</b-dropdown-item>

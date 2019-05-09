@@ -19,7 +19,14 @@
               <b-form-checkbox-group id="challenge-category">
                 <b-form-checkbox value="1">Watching movie/series</b-form-checkbox>
                 <b-form-checkbox value="2">Reading book</b-form-checkbox>
-                <b-form-checkbox value="3">Playing video game</b-form-checkbox>
+                <b-form-checkbox value="4">Playing video game</b-form-checkbox>
+                <b-form-checkbox value="5">Cooking</b-form-checkbox>
+                <b-form-checkbox value="6">Travelling new places</b-form-checkbox>
+                <b-form-checkbox value="7">Learning foreign languages</b-form-checkbox>
+                <b-form-checkbox value="8">Learning programming languages</b-form-checkbox>
+                <b-form-checkbox value="9">Playing musical instruments</b-form-checkbox>
+                <b-form-checkbox value="10">Redesign old stuff</b-form-checkbox>
+                <b-form-checkbox value="11">Body building</b-form-checkbox>
               </b-form-checkbox-group>
             </b-form-group>
             <b-form-group label="Challenge Start Date:" label-for="challenge-startDate">
