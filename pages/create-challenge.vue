@@ -5,7 +5,7 @@
     </b-container>
     <hr>
     <b-card title="Create a new challenge">
-      <b-card-text>Please do not create similar challenge.</b-card-text>
+      <b-card-text>Please do not create similar challenge :)</b-card-text>
 
       <b-row>
         <b-col md="6">
@@ -27,6 +27,10 @@
                 <b-form-checkbox value="9">Playing musical instruments</b-form-checkbox>
                 <b-form-checkbox value="10">Redesign old stuff</b-form-checkbox>
                 <b-form-checkbox value="11">Body building</b-form-checkbox>
+                <b-form-checkbox value="12">Taking photographs</b-form-checkbox>
+                <b-form-checkbox value="13">Playing musical instruments</b-form-checkbox>
+                <b-form-checkbox value="14">Riding bicycle</b-form-checkbox>
+                <b-form-checkbox value="15">Paint</b-form-checkbox>
               </b-form-checkbox-group>
             </b-form-group>
             <b-form-group label="Challenge Start Date:" label-for="challenge-startDate">
