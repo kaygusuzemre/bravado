@@ -4,8 +4,11 @@
       <bravado-navigation></bravado-navigation>
     </b-container>
     <hr>
-    <b-card title="All challanges">
-      <b-card-text>A second paragraph of text in the card.</b-card-text>
+    <b-card title="All challenges">
+      <b-card-text>
+        If you can not find a challenge which satisfies,
+        <nuxt-link to="/create-challenge">create a new challenge</nuxt-link>
+      </b-card-text>
       <hr>
       <b-row>
         <b-col>
@@ -14,11 +17,12 @@
               <b-button variant="outline-secondary">&laquo;</b-button>
               <b-button variant="outline-secondary">&lsaquo;</b-button>
             </b-button-group>
-            <b-button-group class="mx-auto">
-              <b-button variant="outline-primary">Populariry</b-button>
-              <b-button variant="outline-primary">Difficulty</b-button>
-              <b-button variant="outline-primary">Period</b-button>
-            </b-button-group>
+            <b-dropdown variant="outline-danger" class="mx-1" right text="Sort by">
+              <b-dropdown-item>Popularity</b-dropdown-item>
+              <b-dropdown-item>Difficulty</b-dropdown-item>
+              <b-dropdown-item>Period</b-dropdown-item>
+              <b-dropdown-item>A-Z</b-dropdown-item>
+            </b-dropdown>
             <b-dropdown variant="outline-danger" class="mx-1" right text="Filters">
               <b-dropdown-item>Finished</b-dropdown-item>
               <b-dropdown-item>Continuing</b-dropdown-item>
@@ -31,7 +35,7 @@
         </b-col>
         <b-col>
           <b-form class="mx-auto" inline>
-            <b-input placeholder="Write keywords then enter" class="w-100"></b-input>
+            <b-input placeholder="Write keywords to search then enter" class="w-100"></b-input>
           </b-form>
         </b-col>
       </b-row>

@@ -14,7 +14,7 @@
     <b-nav-item href="/challenges">
       <b-img src="/icons/svg/003-worlwide.svg" fluid/>
       <hr>
-      <span>All challanges</span>
+      <span>All challenges</span>
     </b-nav-item>
     <b-nav-item @click="logout()">
       <b-img src="/icons/svg/047-employee-5.svg" fluid/>

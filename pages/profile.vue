@@ -15,75 +15,71 @@
             >
           </b-card>
         </b-col>
+
         <b-col md="1" align-self="center">
-        <b-button v-b-modal.modal-1>Edit Profile</b-button>
-        <b-modal id="modal-1" title="Change Account Settings">
- 
+          <b-button v-b-modal.modal-1>Edit Profile</b-button>
+          <b-modal id="modal-1" title="Change Account Settings">
+            <b-form-group>
+              <b-form-group
+                label-cols-sm="4"
+                label="Name:"
+                label-align-sm="right"
+                label-for="nested-name"
+              >
+                <b-form-input v-model="name" id="nested-name" placeholder="Enter name"></b-form-input>
+              </b-form-group>
 
-        
-      <b-form-group
-     
-    >
-      <b-form-group
-        label-cols-sm="4"
-        label="Name:"
-        label-align-sm="right"
-        label-for="nested-name"
-        
-      >
-        <b-form-input v-model="name" id="nested-name" placeholder="Enter name"></b-form-input>
-      </b-form-group>
+              <b-form-group
+                label-cols-sm="4"
+                label="Surname:"
+                label-align-sm="right"
+                label-for="nested-surname"
+              >
+                <b-form-input v-model="surname" id="nested-surname" placeholder="Enter surname"></b-form-input>
+              </b-form-group>
 
-      <b-form-group
-        label-cols-sm="4"
-        label="Surname:"
-        label-align-sm="right"
-        label-for="nested-surname"
-      >
-        <b-form-input v-model="surname" id="nested-surname" placeholder="Enter surname"></b-form-input>
-      </b-form-group>
+              <b-form-group
+                label-cols-sm="4"
+                label="Email:"
+                label-align-sm="right"
+                label-for="nested-email"
+              >
+                <b-form-input v-model="email" id="nested-email" placeholder="Enter e-mail"></b-form-input>
+              </b-form-group>
 
-      <b-form-group
-        label-cols-sm="4"
-        label="Email:"
-        label-align-sm="right"
-        label-for="nested-email"
-      >
-        <b-form-input v-model="email" id="nested-email" placeholder="Enter e-mail"></b-form-input>
-      </b-form-group>
+              <b-form-group
+                label-cols-sm="4"
+                label="Password:"
+                label-align-sm="right"
+                label-for="nested-password"
+              >
+                <b-form-input
+                  v-model="password"
+                  id="nested-password"
+                  type="password"
+                  placeholder="Enter password"
+                ></b-form-input>
+              </b-form-group>
 
-      <b-form-group
-        label-cols-sm="4"
-        label="Password:"
-        label-align-sm="right"
-        label-for="nested-password"
-      >
-        <b-form-input v-model="password" id="nested-password" type="password" placeholder="Enter password"></b-form-input>
-      </b-form-group>
+              <b-form-group
+                label-cols-sm="4"
+                label="Password Again:"
+                label-align-sm="right"
+                label-for="nested-password-again"
+              >
+                <b-form-input
+                  v-model="password2"
+                  id="nested-password-again"
+                  type="password"
+                  placeholder="Enter password again"
+                ></b-form-input>
+              </b-form-group>
 
-      <b-form-group
-        label-cols-sm="4"
-        label="Password Again:"
-        label-align-sm="right"
-        label-for="nested-password-again"
-      >
-        <b-form-input v-model="password2" id="nested-password-again" type="password" placeholder="Enter password again"></b-form-input>
-      </b-form-group>
-
-      <b-form-group
-        label-cols-sm="4"
-        label="Gender:"
-        label-align-sm="right" class="mb-0"
-      >
-        <b-form-radio-group
-          class="pt-2"
-          :options="['Male', 'Female']"
-          v-model="gender"
-        ></b-form-radio-group>
-      </b-form-group>
-    </b-form-group>
-        </b-modal>
-          
+              <b-form-group label-cols-sm="4" label="Gender:" label-align-sm="right" class="mb-0">
+                <b-form-radio-group class="pt-2" :options="['Male', 'Female']" v-model="gender"></b-form-radio-group>
+              </b-form-group>
+            </b-form-group>
+          </b-modal>
         </b-col>
         <b-col md="9">
           <b-card border-variant="light" class="text-center">
@@ -121,18 +117,15 @@ export default {
   layout: 'user',
   data() {
     return {
-      selectedYear: 2019,
-      
-     
+      selectedYear: 2019
     }
   },
   components: { bravadoNavigation, stability },
-   methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
-      },
-  
-}
+  methods: {
+    onSubmit(evt) {
+      evt.preventDefault()
+      alert(JSON.stringify(this.form))
+    }
+  }
 }
 </script>

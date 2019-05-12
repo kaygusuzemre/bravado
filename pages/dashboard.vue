@@ -23,14 +23,14 @@
                 v-for="(ob,i) in [0,1,2,3,4,5,6,7,8,9,10]"
                 :key="i"
               >
-                Reading Challange {{i}} days.
+                Reading Challenge {{i}} days.
                 <b-progress :value="100-i*10" :max="100" show-progress animated></b-progress>
               </b-list-group-item>
             </b-list-group>
           </b-card>
         </b-col>
         <b-col>
-          <b-card border-variant="light" header="Search a challange" class="text-center">
+          <b-card border-variant="light" header="Search a challenge" class="text-center">
             <b-form inline>
               <b-input placeholder="Write keywords then enter" class="w-100"></b-input>
             </b-form>
