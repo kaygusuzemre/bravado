@@ -2,14 +2,15 @@ import express from 'express'
 import mysql from 'mysql'
 import auth from './routes/auth'
 
-var connection = mysql.createConnection({
+var db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'example',
   database: 'bravado'
 })
 
-connection.connect()
+db.connect()
+db.on('error', function() {})
 const router = express.Router()
 const app = express()
 router.use((req, res, next) => {
@@ -20,7 +21,7 @@ router.use((req, res, next) => {
   next()
 })
 
-auth(router)
+auth(router, db)
 
 export default {
   path: '/api',

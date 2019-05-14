@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS user (
   name varchar(255) NOT NULL,
   surname varchar(255) NOT NULL,
   password varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
+  email varchar(255) NOT NULL UNIQUE,
   age int(10) NOT NULL,
   gender enum('male','female') NOT NULL,
   PRIMARY KEY (id)
