@@ -41,35 +41,35 @@ export default function(router, db) {
         key: 'lastName',
         msg: 'A surname can contain only Alpha Characters'
       })
-
-    db.query(
-      'INSERT INTO user (name,surname,password,email,age,gender) VALUES (?,?,?,?,?,?)',
-      [
-        req.body.firstName,
-        req.body.lastName,
-        md5(req.body.password),
-        req.body.email,
-        req.body.age,
-        req.body.gender
-      ],
-      function(error, results, fields) {
-        if (error && error.code === 'ER_DUP_ENTRY')
-          res.json({
-            status: 'error',
-            key: 'email',
-            msg:
-              'This email has been registered before, please write different.'
-          })
-        else if (error && error.code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD')
-          res.json({
-            status: 'error',
-            msg: 'Invalid value, please control your credientials.'
-          })
-        else if (results && results.affectedRows)
-          res.json({ status: 'success', msg: 'success' })
-        else res.json({ status: 'error', msg: 'Unknown error' })
-      }
-    )
+    else
+      db.query(
+        'INSERT INTO user (name,surname,password,email,age,gender) VALUES (?,?,?,?,?,?)',
+        [
+          req.body.firstName,
+          req.body.lastName,
+          md5(req.body.password),
+          req.body.email,
+          req.body.age,
+          req.body.gender
+        ],
+        function(error, results, fields) {
+          if (error && error.code === 'ER_DUP_ENTRY')
+            res.json({
+              status: 'error',
+              key: 'email',
+              msg:
+                'This email has been registered before, please write different.'
+            })
+          else if (error && error.code === 'ER_TRUNCATED_WRONG_VALUE_FOR_FIELD')
+            res.json({
+              status: 'error',
+              msg: 'Invalid value, please control your credientials.'
+            })
+          else if (results && results.affectedRows)
+            res.json({ status: 'success', msg: 'success' })
+          else res.json({ status: 'error', msg: 'Unknown error' })
+        }
+      )
   })
 
   router.post('/auth/update', (req, res) => {
