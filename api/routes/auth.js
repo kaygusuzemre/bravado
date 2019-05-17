@@ -71,4 +71,8 @@ export default function(router, db) {
       }
     )
   })
+
+  router.post('/auth/update', (req, res) => {
+    // update query.
+  })
 }
