@@ -84,4 +84,4 @@ dist
 sw.*
 
 package-lock.json
-.notes
+.notes.md
