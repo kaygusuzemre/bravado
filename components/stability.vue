@@ -21,7 +21,7 @@ export default {
       date: new Date()
     }
   },
-  created() {
+  mounted() {
     if (process.client) {
       const p5 = require('p5')
       const self = this

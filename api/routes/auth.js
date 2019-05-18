@@ -3,7 +3,31 @@ import md5 from 'md5'
 
 export default function(router, db) {
   router.post('/auth/login', (req, res) => {
-    // Login function
+    if (!validator.isEmail(req.body.email))
+      res
+        .status(400)
+        .json({ status: 'error', key: 'email', msg: 'Email is not valid' })
+    else if (!validator.matches(String(req.body.password), /(?=.*[0-9])/))
+      res.status(400).json({
+        status: 'error',
+        key: 'password',
+        msg: 'The password must contain at least 1 numeric character'
+      })
+    else
+      db.query(
+        'SELECT "ok" as status FROM user WHERE email=? AND password=?',
+        [req.body.email, md5(req.body.password)],
+        function(error, results, fields) {
+          if (results && results.length && results[0].status === 'ok')
+            res.json({ status: 'success', msg: 'success', token: 'ABC ' })
+          else
+            res.status(401).json({
+              status: 'error',
+              key: 'form',
+              msg: `The email address or the password that you've entered doesn't match any account. Please try again.`
+            })
+        }
+      )
   })
 
   router.post('/auth/logout', (req, res) => {
