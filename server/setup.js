@@ -5,7 +5,7 @@ connection.connect();
 connection.query(`
 CREATE TABLE IF NOT EXISTS user (
     userId int NOT NULL AUTO_INCREMENT UNIQUE,
-    role varchar(255) NOT NULL,
+    role varchar(255) NOT NULL DEFAULT "user",
     name varchar(255) NOT NULL,
     surname varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
