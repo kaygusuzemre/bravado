@@ -8,31 +8,7 @@
           <div id="socialdiv">
             <p id="header" class="text-center">LOGIN FORM</p>
 
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-              <b-form-group id="input-group-1" label="Email address:" label-for="input-email">
-                <b-form-input
-                  id="input-email"
-                  v-model="login.email"
-                  type="email"
-                  required
-                  placeholder="Enter email"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-3" label="Password:" label-for="input-pw">
-                <b-form-input
-                  id="input-pw"
-                  v-model="login.Password"
-                  type="password"
-                  required
-                  placeholder="Password"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-button type="submit" size="lg" variant="primary">Login via account</b-button>
-
-              <b-button href size="lg" variant="danger">Login via Gmail</b-button>
-            </b-form>
+            <login-form></login-form>
           </div>
         </b-col>
         <b-col md="6">
@@ -114,19 +90,19 @@
 </template>
 
 <script>
+import loginForm from '~/components/auth/loginForm.vue'
 export default {
+  components: {
+    loginForm
+  },
   data() {
     return {
-      login:{
-       email:"",
-       password:""
-      },
       form: {
         email: '',
         name: '',
-        surName:"",
-        password: "",
-        password2:"",
+        surName: '',
+        password: '',
+        password2: '',
         gender: '',
         age: 0
       },
@@ -136,13 +112,13 @@ export default {
   },
   methods: {
     onReset: function() {
-      this.form.email=""
-      this.form.name= ''
-      this.form.surName=""
-      this.form.password= ""
-      this.form.password2=""
-      this.form.gender= ''
-      this.form.age=0
+      this.form.email = ''
+      this.form.name = ''
+      this.form.surName = ''
+      this.form.password = ''
+      this.form.password2 = ''
+      this.form.gender = ''
+      this.form.age = 0
     },
     onSubmit: function() {}
   }
