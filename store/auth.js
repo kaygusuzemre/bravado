@@ -1,36 +1,45 @@
 import axios from 'axios'
 
 export const state = () => ({
-  token: null
+  token: undefined,
+  response: undefined
 })
 
 export const mutations = {
-  SET_USER: function(state, user) {
-    state.token = user
+  SET_TOKEN: function(state, token) {
+    state.token = token
+  },
+  SET_RESPONSE: function(state, response) {
+    state.response = response
   }
 }
 
 export const actions = {
-  // nuxtServerInit is called by Nuxt.js before server-rendering every page
   nuxtServerInit({ commit }, { req }) {
-    if (req.session && req.session.authUser) {
-      commit('SET_USER', req.session.authUser)
+    if (req.session && req.session.token) {
+      commit('SET_TOKEN', req.session.token)
     }
   },
+  /**
+   * endpoint : /api/auth/login
+   * params: email:string, password:sting
+   * returns: error
+   */
   async login({ commit }, { email, password }) {
     try {
-      const { data } = await axios.post('/api/auth/login', { email, password })
-      commit('SET_USER', data)
+      const { data } = await axios.post('/api/auth/login', {
+        email,
+        password
+      })
+      commit('SET_TOKEN', data.token)
+      commit('SET_RESPONSE', data)
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        throw new Error('Bad credentials')
-      }
-      throw error
+      commit('SET_RESPONSE', error.response.data)
     }
   },
 
   async logout({ commit }) {
     await axios.post('/api/auth/logout')
-    commit('SET_USER', null)
+    commit('SET_TOKEN', null)
   }
 }
