@@ -51,7 +51,10 @@ export default {
   computed: {
     response() {
       const status = get(this.$store.state.auth.response, 'status')
-      if (status === 'success') this.$router.replace('/profile')
+      if (status === 'success') {
+        this.$store.commit('auth/SET_RESPONSE', undefined)
+        this.$router.replace('/profile')
+      }
       return {
         key: get(this.$store.state.auth.response, 'key'),
         msg: get(this.$store.state.auth.response, 'msg'),
