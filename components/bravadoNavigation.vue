@@ -1,17 +1,17 @@
 <template>
   <b-nav id="navigation" tabs justified align="center">
-    <b-nav-item href="/dashboard" active>
+    <b-nav-item @click="$router.push('/dashboard')" active>
       <b-img src="/icons/svg/036-employee-2.svg" fluid/>
       <hr>
       <span>Dashboard</span>
     </b-nav-item>
 
-    <b-nav-item href="/profile">
+    <b-nav-item @click="$router.push('/profile')">
       <b-img src="/icons/svg/042-winner.svg" fluid/>
       <hr>
       <span>My profile</span>
     </b-nav-item>
-    <b-nav-item href="/challenges">
+    <b-nav-item @click="$router.push('/challenges')">
       <b-img src="/icons/svg/003-worlwide.svg" fluid/>
       <hr>
       <span>All challenges</span>
@@ -50,11 +50,10 @@ export default {
 
 #navigation .nav-item:hover,
 .nav-link.active {
-  font-weight: bold;
+  background: #fff;
 }
 
-#navigation .nav-item:hover img,
-.nav-link.active img {
+#navigation .nav-item {
   padding-top: 1em;
 }
 
