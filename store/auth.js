@@ -19,7 +19,7 @@ export const actions = {
   },
   async login({ commit }, { email, password }) {
     try {
-      const { data } = await axios.post('/api/login', { email, password })
+      const { data } = await axios.post('/api/auth/login', { email, password })
       commit('SET_USER', data)
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -30,7 +30,7 @@ export const actions = {
   },
 
   async logout({ commit }) {
-    await axios.post('/api/logout')
+    await axios.post('/api/auth/logout')
     commit('SET_USER', null)
   }
 }
