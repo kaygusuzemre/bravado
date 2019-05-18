@@ -1,7 +1,8 @@
 import validator from 'validator'
 import md5 from 'md5'
-
-export default function(router, db) {
+import redis from 'redis'
+import utils from '../utils'
+export default function(router, db, cache) {
   router.post('/auth/login', (req, res) => {
     if (!validator.isEmail(req.body.email))
       res
@@ -15,12 +16,18 @@ export default function(router, db) {
       })
     else
       db.query(
-        'SELECT "ok" as status FROM user WHERE email=? AND password=?',
+        'SELECT "ok" as status, userId as id  FROM user WHERE email=? AND password=?',
         [req.body.email, md5(req.body.password)],
         function(error, results, fields) {
-          if (results && results.length && results[0].status === 'ok')
-            res.json({ status: 'success', msg: 'success', token: 'ABC ' })
-          else
+          if (results && results.length && results[0].status === 'ok') {
+            const session = utils.createSessionId()
+            const token = utils.createAuthToken(session)
+
+            cache.set(session, results[0].id)
+            res.cookie('token', token, { maxAge: 900000, httpOnly: true })
+            res.header('authorization', `Bearer ${token}`)
+            res.json({ status: 'success', msg: 'success', token: session })
+          } else
             res.status(401).json({
               status: 'error',
               key: 'form',
@@ -94,6 +101,44 @@ export default function(router, db) {
           else res.json({ status: 'error', msg: 'Unknown error' })
         }
       )
+  })
+
+  router.get('/auth/me', (req, res) => {
+    let token
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.split(' ')[0] === 'Bearer'
+    ) {
+      token = req.headers.authorization.split(' ')[1]
+    }
+
+    try {
+      const session = utils.verifyAuthToken(token)
+    } catch (err) {
+      res.status(400).json({
+        status: 'error',
+        key: 'jwt',
+        msg: 'jwt error'
+      })
+    }
+    if (session === undefined) {
+      res.set('WWW-Authenticate', 'Bearer realm="Authorization Required"')
+      return res.status(401).send('Authorization Required')
+    }
+    cache.get(session, (err, id) => {
+      if (err)
+        res.status(400).json({
+          status: 'error',
+          msg: 'Cache error, please contact with developers'
+        })
+      db.query(
+        `SELECT name,surName,role,email,age,gender FROM user WHERE userId=?`,
+        [id],
+        function(error, results, fields) {
+          res.json(results)
+        }
+      )
+    })
   })
 
   router.post('/auth/update', (req, res) => {
