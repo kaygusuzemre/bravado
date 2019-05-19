@@ -1,8 +1,9 @@
 import express from 'express'
 import mysql from 'mysql'
 import auth from './routes/auth'
-
-var db = mysql.createConnection({
+import redis from 'redis'
+const cache = redis.createClient()
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'example',
@@ -33,7 +34,7 @@ router.use((req, res, next) => {
   next()
 })
 
-auth(router, db)
+auth(router, db, cache)
 
 export default {
   path: '/api',
