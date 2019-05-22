@@ -25,7 +25,7 @@
                 label-align-sm="right"
                 label-for="nested-name"
               >
-                <b-form-input v-model="name" id="nested-name" placeholder="Enter name"></b-form-input>
+                <b-form-input v-model="user.firstName" id="nested-name" placeholder="Enter name"></b-form-input>
               </b-form-group>
 
               <b-form-group
@@ -34,7 +34,11 @@
                 label-align-sm="right"
                 label-for="nested-surname"
               >
-                <b-form-input v-model="surname" id="nested-surname" placeholder="Enter surname"></b-form-input>
+                <b-form-input
+                  v-model="user.lastName"
+                  id="nested-surname"
+                  placeholder="Enter surname"
+                ></b-form-input>
               </b-form-group>
 
               <b-form-group
@@ -43,7 +47,7 @@
                 label-align-sm="right"
                 label-for="nested-email"
               >
-                <b-form-input v-model="email" id="nested-email" placeholder="Enter e-mail"></b-form-input>
+                <b-form-input v-model="user.email" id="nested-email" placeholder="Enter e-mail"></b-form-input>
               </b-form-group>
 
               <b-form-group
@@ -53,7 +57,7 @@
                 label-for="nested-password"
               >
                 <b-form-input
-                  v-model="password"
+                  v-model="user.password"
                   id="nested-password"
                   type="password"
                   placeholder="Enter password"
@@ -67,15 +71,11 @@
                 label-for="nested-password-again"
               >
                 <b-form-input
-                  v-model="password2"
+                  v-model="user.password2"
                   id="nested-password-again"
                   type="password"
                   placeholder="Enter password again"
                 ></b-form-input>
-              </b-form-group>
-
-              <b-form-group label-cols-sm="4" label="Gender:" label-align-sm="right" class="mb-0">
-                <b-form-radio-group class="pt-2" :options="['Male', 'Female']" v-model="gender"></b-form-radio-group>
               </b-form-group>
             </b-form-group>
           </b-modal>
@@ -113,17 +113,27 @@
 <script>
 import bravadoNavigation from '~/components/bravadoNavigation.vue'
 import stability from '~/components/stability.vue'
+
 export default {
   layout: 'user',
   data() {
     return {
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        password2: ''
+      },
+
       selectedYear: 2019
     }
   },
   components: { bravadoNavigation, stability },
   methods: {
-    onSubmit(evt) {
+    async onSubmit(evt) {
       evt.preventDefault()
+      const req = await this.$axios.$post('/api/auth/update', this.user)
       alert(JSON.stringify(this.form))
     }
   }
