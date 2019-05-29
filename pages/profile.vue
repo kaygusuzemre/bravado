@@ -17,7 +17,7 @@
           <hr>
 
           <b-button block variant="light" v-b-modal.modal-1>Edit Profile</b-button>
-          <b-modal id="modal-1" title="Change Account Settings">
+          <b-modal id="modal-1" title="Change Account Settings" @ok="onSubmit">
             <b-form-group>
               <b-form-group
                 label-cols-sm="4"
@@ -78,6 +78,22 @@
                 ></b-form-input>
               </b-form-group>
             </b-form-group>
+            <div slot="modal-footer" slot-scope="{ ok, cancel }" class="w-100">
+              <b-row>
+                <b-col>
+                  <p class="float-left">{{reqMsg}}</p>
+                </b-col>
+                <b-col>
+                  <b-button variant="success" @click="ok()" class="float-right">OK</b-button>
+                  <b-button
+                    variant="danger"
+                    @click="cancel()"
+                    class="float-right"
+                    style="margin-right:10px;"
+                  >Cancel</b-button>
+                </b-col>
+              </b-row>
+            </div>
           </b-modal>
         </b-col>
 
@@ -125,7 +141,7 @@ export default {
         password: '',
         password2: ''
       },
-
+      reqMsg: null,
       selectedYear: 2019
     }
   },
@@ -133,8 +149,10 @@ export default {
   methods: {
     async onSubmit(evt) {
       evt.preventDefault()
-      const req = await this.$axios.$post('/api/auth/update', this.user)
-      alert(JSON.stringify(this.form))
+      const req = await this.$axios.$post('/api/user/update', this.user)
+      if (req.status === 'error' || req.status === 'success')
+        this.reqMsg = req.msg
+      else this.reqMsg = null
     }
   }
 }

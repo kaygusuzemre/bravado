@@ -51,33 +51,33 @@
 
 <script>
 export default {
-  name: "register",
+  name: 'register',
   data() {
     return {
       user: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        age: "",
-        gender: "",
-        password: "",
-        password2: ""
+        firstName: '',
+        lastName: '',
+        email: '',
+        age: '',
+        gender: '',
+        password: '',
+        password2: ''
       },
       result: null,
       reqMsg: null
-    };
+    }
   },
 
   methods: {
     async onSubmit(e) {
-      e.preventDefault();
-      const req = await this.$axios.$post("/api/auth/register", this.user);
+      e.preventDefault()
+      const req = await this.$axios.$post('/api/auth/register', this.user)
 
-      console.log(req.msg);
-      if (req.status === "error" || req.status === "success")
-        this.reqMsg = req.msg;
-      else this.errmsg = null;
+      console.log(req.msg)
+      if (req.status === 'error' || req.status === 'success')
+        this.reqMsg = req.msg
+      else this.reqMsg = null
     }
   }
-};
+}
 </script>
