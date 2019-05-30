@@ -20,13 +20,13 @@ export default function(router, db, cache) {
         [req.body.email, md5(req.body.password)],
         function(error, results, fields) {
           if (results && results.length && results[0].status === 'ok') {
-            const session = utils.createSessionId()
-            const token = utils.createAuthToken(session)
+            const session = utils(db, cache).createSessionId()
+            const token = utils(db, cache).createAuthToken(session)
 
             cache.set(session, results[0].id)
             res.cookie('token', token, { maxAge: 900000, httpOnly: true })
             res.header('authorization', `Bearer ${token}`)
-            res.json({ status: 'success', msg: 'success', token: session })
+            res.json({ status: 'success', msg: 'success', token: token })
           } else
             res.status(401).json({
               status: 'error',
@@ -113,7 +113,26 @@ export default function(router, db, cache) {
     }
 
     try {
-      const session = utils.verifyAuthToken(token)
+      const session = utils(db, cache).verifyAuthToken(token)
+
+      if (session === undefined) {
+        res.set('WWW-Authenticate', 'Bearer realm="Authorization Required"')
+        return res.status(401).send('Authorization Required')
+      }
+      cache.get(session, (err, id) => {
+        if (err)
+          res.status(400).json({
+            status: 'error',
+            msg: 'Cache error, please contact with developers'
+          })
+        db.query(
+          `SELECT name,surName,role,email,age,gender FROM user WHERE userId=?`,
+          [id],
+          function(error, results, fields) {
+            res.json(results[0])
+          }
+        )
+      })
     } catch (err) {
       res.status(400).json({
         status: 'error',
@@ -121,24 +140,6 @@ export default function(router, db, cache) {
         msg: 'jwt error'
       })
     }
-    if (session === undefined) {
-      res.set('WWW-Authenticate', 'Bearer realm="Authorization Required"')
-      return res.status(401).send('Authorization Required')
-    }
-    cache.get(session, (err, id) => {
-      if (err)
-        res.status(400).json({
-          status: 'error',
-          msg: 'Cache error, please contact with developers'
-        })
-      db.query(
-        `SELECT name,surName,role,email,age,gender FROM user WHERE userId=?`,
-        [id],
-        function(error, results, fields) {
-          res.json(results)
-        }
-      )
-    })
   })
 
   router.post('/auth/update', (req, res) => {

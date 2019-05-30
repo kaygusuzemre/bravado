@@ -17,7 +17,7 @@
           <hr>
 
           <b-button block variant="light" v-b-modal.modal-1>Edit Profile</b-button>
-          <b-modal id="modal-1" title="Change Account Settings" @ok="onSubmit">
+          <b-modal id="modal-1" title="Change Account Settings" @ok="onSubmit" @show="modalOpened">
             <b-form-group>
               <b-form-group
                 label-cols-sm="4"
@@ -50,33 +50,42 @@
                 <b-form-input v-model="user.email" id="nested-email" placeholder="Enter e-mail"></b-form-input>
               </b-form-group>
 
-              <b-form-group
-                label-cols-sm="4"
-                label="Password:"
-                label-align-sm="right"
-                label-for="nested-password"
-              >
-                <b-form-input
-                  v-model="user.password"
-                  id="nested-password"
-                  type="password"
-                  placeholder="Enter password"
-                ></b-form-input>
-              </b-form-group>
+              <b-form-checkbox
+                v-model="user.updatePasswordState"
+                name="checkbox-1"
+                :value="true"
+                :uchecked-value="false"
+              >I want to change my password</b-form-checkbox>
+              <hr>
+              <div v-show="user.updatePasswordState">
+                <b-form-group
+                  label-cols-sm="4"
+                  label="Password:"
+                  label-align-sm="right"
+                  label-for="nested-password"
+                >
+                  <b-form-input
+                    v-model="user.password"
+                    id="nested-password"
+                    type="password"
+                    placeholder="Enter password"
+                  ></b-form-input>
+                </b-form-group>
 
-              <b-form-group
-                label-cols-sm="4"
-                label="Password Again:"
-                label-align-sm="right"
-                label-for="nested-password-again"
-              >
-                <b-form-input
-                  v-model="user.password2"
-                  id="nested-password-again"
-                  type="password"
-                  placeholder="Enter password again"
-                ></b-form-input>
-              </b-form-group>
+                <b-form-group
+                  label-cols-sm="4"
+                  label="Password Again:"
+                  label-align-sm="right"
+                  label-for="nested-password-again"
+                >
+                  <b-form-input
+                    v-model="user.password2"
+                    id="nested-password-again"
+                    type="password"
+                    placeholder="Enter password again"
+                  ></b-form-input>
+                </b-form-group>
+              </div>
             </b-form-group>
             <div slot="modal-footer" slot-scope="{ ok, cancel }" class="w-100">
               <b-row>
@@ -127,11 +136,15 @@
 
 
 <script>
+import { mapActions } from 'vuex'
 import bravadoNavigation from '~/components/bravadoNavigation.vue'
 import stability from '~/components/stability.vue'
 
 export default {
   layout: 'user',
+  beforeMount() {
+    this.$store.dispatch('user/GET_ME')
+  },
   data() {
     return {
       user: {
@@ -139,7 +152,9 @@ export default {
         lastName: '',
         email: '',
         password: '',
-        password2: ''
+        password2: '',
+
+        updatePasswordState: false
       },
       reqMsg: null,
       selectedYear: 2019
@@ -147,13 +162,29 @@ export default {
   },
   components: { bravadoNavigation, stability },
   methods: {
-    async onSubmit(evt) {
-      evt.preventDefault()
-      const req = await this.$axios.$post('/api/user/update', this.user)
-      if (req.status === 'error' || req.status === 'success')
-        this.reqMsg = req.msg
-      else this.reqMsg = null
-    }
+    modalOpened() {
+      this.user.firstName = this.$store.state.user.name
+      this.user.lastName = this.$store.state.user.surName
+      this.user.email = this.$store.state.user.email
+    },
+    ...mapActions({
+      onSubmit(dispatch, e) {
+        e.preventDefault()
+        let self = this
+        dispatch('user/update', {
+          user: self.user,
+          onSuccess: function() {
+            setTimeout(function() {
+              self.$bvModal.hide('modal-1')
+            }, 1000)
+          },
+          onFailure: function(err) {
+            console.log('calisti')
+            self.reqMsg = err
+          }
+        })
+      }
+    })
   }
 }
 </script>
