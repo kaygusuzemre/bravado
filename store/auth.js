@@ -15,11 +15,6 @@ export const mutations = {
 }
 
 export const actions = {
-  nuxtServerInit({ commit }, { req }) {
-    if (req.session && req.session.token) {
-      commit('SET_TOKEN', req.session.token)
-    }
-  },
   /**
    * endpoint : /api/auth/login
    * params: email:string, password:sting
