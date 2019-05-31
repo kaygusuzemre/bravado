@@ -1,10 +1,12 @@
 import express from 'express'
 import mysql from 'mysql'
+import redis from 'redis'
+
 import auth from './routes/auth'
 import user from './routes/user'
-
 import challenge from './routes/challenge'
-import redis from 'redis'
+import category from './routes/category'
+
 const cache = redis.createClient()
 const db = mysql.createConnection({
   host: 'localhost',
@@ -40,5 +42,6 @@ router.use((req, res, next) => {
 auth(router, db, cache)
 user(router, db, cache)
 user(challenge, db, cache)
+user(category, db, cache)
 
 export default { path: '/api', handler: router }
