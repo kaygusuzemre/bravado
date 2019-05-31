@@ -23,20 +23,24 @@ export const mutations = {
 export const getters = {}
 
 export const actions = {
+  /**
+   * Get user data from /api/auth/me
+   * Needs TOKEN
+   */
   async GET_ME({ rootState, commit }) {
     try {
-      console.log('test', rootState.auth.token)
       const { data } = await axios.get('/api/auth/me', {
         headers: {
           authorization: `Bearer ${rootState.auth.token}`
         }
       })
-      console.log(data)
       commit('UPDATE_USER', data)
-    } catch (error) {
-      console.log(error)
-    }
+    } catch (error) {}
   },
+  /**
+   * Update user with user data to path /api/user/update
+   * Needs TOKEN
+   */
   async update({ rootState, commit }, { user, onSuccess, onFailure }) {
     try {
       const { data: req } = await axios.post('/api/user/update', user, {
@@ -57,7 +61,6 @@ export const actions = {
       } else {
       }
     } catch (err) {
-      console.log(err)
       onFailure(err)
     }
   }
