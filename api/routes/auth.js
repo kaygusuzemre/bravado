@@ -3,6 +3,11 @@ import md5 from 'md5'
 import redis from 'redis'
 import utils from '../utils'
 export default function(router, db, cache) {
+  /**
+   * Login user
+   * @param string  email
+   * @param string  password
+   */
   router.post('/auth/login', (req, res) => {
     if (!validator.isEmail(req.body.email))
       res
@@ -43,6 +48,16 @@ export default function(router, db, cache) {
     // Logout function
   })
 
+  /**
+   * Register user
+   * @param string  email
+   * @param string  password
+   * @param string  password2
+   * @param string  gender
+   * @param string  firstName
+   * @param string  lastName
+   * @param int     age
+   */
   router.post('/auth/register', (req, res) => {
     if (!validator.isEmail(req.body.email))
       res.json({ status: 'error', key: 'email', msg: 'Email is not valid' })

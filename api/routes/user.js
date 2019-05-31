@@ -73,7 +73,7 @@ export default function(router, db, cache) {
             )
               res.json({
                 status: 'error',
-                msg: 'Invalid value, please control your credientials.'
+                msg: 'Invalid value, please control your credentials.'
               })
             else if (results && results.affectedRows)
               res.json({ status: 'success', msg: 'success' })
