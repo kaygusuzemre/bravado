@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <b-container fluid>
     <b-row class="justify-content-md-center">
       <b-col cols="12" md="10">
         <nuxt/>
@@ -9,7 +9,7 @@
     <footer id="footer">
       <center>Bravado 2019</center>
     </footer>
-  </div>
+  </b-container>
 </template>
 
 <style>
