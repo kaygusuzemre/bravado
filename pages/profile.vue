@@ -7,7 +7,7 @@
     <b-container id="profile" fluid>
       <b-row>
         <b-col md="2">
-          <b-card border-variant="light" header="John doe" class="text-center">
+          <b-card border-variant="light" :header="userFullName" class="text-center">
             <img
               src="https://cdn.pixabay.com/photo/2017/02/23/13/05/profile-2092113_960_720.png"
               class="img-fluid"
@@ -158,6 +158,11 @@ export default {
       },
       reqMsg: null,
       selectedYear: 2019
+    }
+  },
+  computed: {
+    userFullName: function() {
+      return `${this.$store.state.user.name} ${this.$store.state.user.surName}`
     }
   },
   components: { bravadoNavigation, stability },
