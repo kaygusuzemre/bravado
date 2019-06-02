@@ -25,33 +25,6 @@ export default {
   components: {
     loginForm,
     registerForm
-  },
-  data() {
-    return {
-      form: {
-        email: '',
-        name: '',
-        surName: '',
-        password: '',
-        password2: '',
-        gender: '',
-        age: 0
-      },
-
-      show: true
-    }
-  },
-  methods: {
-    onReset: function() {
-      this.form.email = ''
-      this.form.name = ''
-      this.form.surName = ''
-      this.form.password = ''
-      this.form.password2 = ''
-      this.form.gender = ''
-      this.form.age = 0
-    },
-    onSubmit: function() {}
   }
 }
 </script>
