@@ -1,6 +1,5 @@
 import validator from 'validator'
 import md5 from 'md5'
-import redis from 'redis'
 import utils from '../utils'
 
 export default function(router, db, cache) {
