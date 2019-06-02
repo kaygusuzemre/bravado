@@ -41,7 +41,7 @@ router.use((req, res, next) => {
 
 auth(router, db, cache)
 user(router, db, cache)
-user(challenge, db, cache)
-user(category, db, cache)
+challenge(router, db, cache)
+category(router, db, cache)
 
 export default { path: '/api', handler: router }
