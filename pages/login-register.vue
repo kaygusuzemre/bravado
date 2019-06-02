@@ -7,82 +7,11 @@
         <b-col md="6">
           <div id="socialdiv">
             <p id="header" class="text-center">LOGIN FORM</p>
-
             <login-form></login-form>
           </div>
         </b-col>
         <b-col md="6">
-          <div id="registerform">
-            <p id="header" class="text-center">REGISTER FORM</p>
-
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-              <b-form-group
-                id="input-group-1"
-                label="Email address:"
-                label-for="input-email-register"
-                description="We'll never share your email with anyone else."
-              >
-                <b-form-input
-                  id="input-email-register"
-                  v-model="form.email"
-                  type="email"
-                  required
-                  placeholder="Enter email"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-2" label="Your Name:" label-for="input-name">
-                <b-form-input id="input-name" v-model="form.name" required placeholder="Enter name"></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-2" label="Your Surname:" label-for="input-surName">
-                <b-form-input
-                  id="input-surName"
-                  v-model="form.surName"
-                  required
-                  placeholder="Enter surname"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-2" label="Your Age:" label-for="input-age">
-                <b-form-input
-                  type="number"
-                  id="input-age"
-                  v-model="form.age"
-                  required
-                  placeholder="Enter age"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group label="Your gender">
-                <b-form-radio v-model="form.gender" name="some-radios" value="male">Male</b-form-radio>
-                <b-form-radio v-model="form.gender" name="some-radios" value="female">Female</b-form-radio>
-              </b-form-group>
-
-              <b-form-group id="input-group-3" label="Password:" label-for="input-pw1">
-                <b-form-input
-                  id="input-pw1"
-                  v-model="form.password"
-                  type="password"
-                  required
-                  placeholder="Enter Password"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-3" label="Password again:" label-for="input-pw2">
-                <b-form-input
-                  id="input-pw2"
-                  v-model="form.password2"
-                  type="password"
-                  required
-                  placeholder="Password again"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-button type="reset" variant="danger" class="float-left">Reset Form</b-button>
-              <b-button type="submit" variant="primary" class="float-right">Register</b-button>
-            </b-form>
-          </div>
+          <register-form></register-form>
         </b-col>
       </b-row>
     </b-container>
@@ -91,9 +20,11 @@
 
 <script>
 import loginForm from '~/components/auth/loginForm.vue'
+import registerForm from '~/components/auth/registerForm.vue'
 export default {
   components: {
-    loginForm
+    loginForm,
+    registerForm
   },
   data() {
     return {
