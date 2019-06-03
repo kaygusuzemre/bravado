@@ -3,6 +3,30 @@ import md5 from 'md5'
 import utils from '../utils'
 
 export default function(router, db, cache) {
+  /**
+   * Challenges which are created by the user.
+   * @only user
+   */
+  router.get(
+    '/user/challenges',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `SELECT * FROM challenge WHERE owner=?`,
+        [req.user.userId],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else res.json(results)
+        }
+      )
+    }
+  )
+
   router.post(
     '/user/update',
     utils(db, cache).restrictByUserRole('user'),
