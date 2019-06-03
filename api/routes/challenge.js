@@ -38,7 +38,7 @@ export default function(router, db, cache) {
    *    string rotate
    *    string edge
    *    string color
-   *
+   *    string imageURL
    */
   router.post(
     '/challenge/add',
@@ -126,7 +126,6 @@ export default function(router, db, cache) {
             else if (results && results.affectedRows)
               res.json({ status: 'success', msg: 'success' })
             else {
-              console.log(error)
               res.json({
                 status: 'error',
                 msg: 'Unknown error'
