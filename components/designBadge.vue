@@ -67,7 +67,7 @@
 <script>
 import ColorPicker from 'vue-color-picker-wheel'
 export default {
-  props: ['edge', 'rotate', 'color'],
+  props: ['edge', 'rotate', 'color', 'imageURL'],
   components: {
     ColorPicker
   },
@@ -113,16 +113,15 @@ export default {
         '/icons/svg/pencil-box.svg',
         '/icons/svg/school.svg',
         '/icons/svg/send.svg'
-      ],
-      imageURL: '/icons/svg/theater.svg'
+      ]
     }
   },
   watch: {
     badgeIndex: function(n, o) {
       if (n >= this.badgeImages.length) n = this.badgeImages.length - 1
       else if (n <= 0) n = 0
-      this.imageURL = this.badgeImages[n]
-      this.image = this.p5.loadImage(this.imageURL)
+      this.$emit('update:imageURL', this.badgeImages[n])
+      this.image = this.p5.loadImage(this.badgeImages[n])
       return n
     }
   },

@@ -101,6 +101,7 @@
                 :rotate.sync="badge.rotate"
                 :edge.sync="badge.edge"
                 :color.sync="badge.color"
+                :imageURL.sync="badge.imageURL"
               ></design-badge>
               <hr>
               <b-alert
@@ -145,7 +146,8 @@ export default {
       badge: {
         rotate: '5',
         edge: '5',
-        color: '#ffffff'
+        color: '#ffffff',
+        imageURL: '/icons/svg/theater.svg'
       },
       response: {
         status: null,

@@ -141,7 +141,40 @@
       <hr>
       <b-row>
         <b-col md="12">
-          <b-card border-variant="light" header="Created Challanges" class="text-center"></b-card>
+          <b-card border-variant="light" header="Created Challanges" class="text-center">
+            <b-alert
+              variant="warning"
+              v-if="userChallenges.length < 1"
+              show
+            >Your challenges are not found.</b-alert>
+            <b-card-group v-else columns>
+              <b-card v-for="(challenge,i) in userChallenges" :key="i">
+                <b-card-title>{{challenge.title}}</b-card-title>
+                <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
+                <!--
+                <div slot="header">
+                  <b-progress
+                    :max="daysBetweenDates(challenge.startDate, challenge.finishDate)"
+                    height="15px"
+                  >
+                    <b-progress-bar
+                      :value="daysBetweenDates(challenge.startDate, new Date())"
+                      :label="`${daysBetweenDates(new Date(), challenge.finishDate)} days remain`"
+                      variant="secondary"
+                    ></b-progress-bar>
+                  </b-progress>
+                </div>-->
+                <div slot="footer">
+                  <b-card-text
+                    class="small text-muted float-left"
+                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                  <b-card-text
+                    class="small text-muted float-right"
+                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                </div>
+              </b-card>
+            </b-card-group>
+          </b-card>
         </b-col>
       </b-row>
     </b-container>
@@ -153,34 +186,58 @@
 import { mapActions } from 'vuex'
 import bravadoNavigation from '~/components/bravadoNavigation.vue'
 import stability from '~/components/stability.vue'
-
+import drawBadge from '~/components/drawBadge.vue'
 export default {
   layout: 'user',
   beforeMount() {
-    this.$store.dispatch('user/GET_ME')
+    this.$store.dispatch('user/GET_ME'),
+      this.$store.dispatch('user/challengeOwner/GET_CHALLANGES')
   },
   data() {
-    return {
+    let data = {
       user: {
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         password2: '',
-
         updatePasswordState: false
       },
       reqMsg: null,
       selectedYear: 2019
     }
+
+    if (process.client) {
+      data.p5 = require('p5')
+    }
+
+    return data
   },
   computed: {
     userFullName: function() {
       return `${this.$store.state.user.name} ${this.$store.state.user.surName}`
+    },
+    userChallenges: function() {
+      const challenges = this.$store.state.user.challengeOwner.challenges
+      return challenges
     }
   },
-  components: { bravadoNavigation, stability },
+  filters: {
+    prettyDate: function(val) {
+      return val.split('T')[0]
+    }
+  },
+  components: { bravadoNavigation, stability, drawBadge },
   methods: {
+    daysBetweenDates(first, second) {
+      var date2 = new Date(first)
+      var date1 = new Date(second)
+      if (date2.getTime() > date1.getTime()) return 0
+      var timeDiff = Math.abs(date2.getTime() - date1.getTime())
+      const dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24))
+      console.log(dayDifference)
+      return dayDifference
+    },
     modalOpened() {
       this.user.firstName = this.$store.state.user.name
       this.user.lastName = this.$store.state.user.surName
