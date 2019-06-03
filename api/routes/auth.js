@@ -1,6 +1,5 @@
 import validator from 'validator'
 import md5 from 'md5'
-import redis from 'redis'
 import utils from '../utils'
 export default function(router, db, cache) {
   /**
@@ -24,6 +23,12 @@ export default function(router, db, cache) {
         'SELECT "ok" as status, userId as id  FROM user WHERE email=? AND password=?',
         [req.body.email, md5(req.body.password)],
         function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              key: 'db',
+              msg: 'Unknown error.'
+            })
           if (results && results.length && results[0].status === 'ok') {
             const session = utils(db, cache).createSessionId()
             const token = utils(db, cache).createAuthToken(session)
@@ -144,6 +149,12 @@ export default function(router, db, cache) {
           `SELECT name,surName,role,email,age,gender FROM user WHERE userId=?`,
           [id],
           function(error, results, fields) {
+            if (error)
+              res.json({
+                status: 'error',
+                key: 'db',
+                msg: 'Unknown error.'
+              })
             res.json(results[0])
           }
         )
