@@ -5,7 +5,15 @@
     </b-container>
     <hr>
     <b-container fluid>
-      <b-button block variant="primary">Submit Assignment</b-button>
+      <template v-if="upLoader">
+        <div class="d-flex justify-content-center mb-3">
+          <b-spinner label="Spinning"></b-spinner>
+        </div>
+      </template>
+      <template v-else>
+        <b-button block variant="primary" v-if="isParticipated">Submit Assignment</b-button>
+        <b-button block variant="info" v-else @click="joinChallenge">Join Challenge</b-button>
+      </template>
       <hr>
       <b-card no-body>
         <b-tabs card>
@@ -32,14 +40,14 @@
         </b-tabs>
       </b-card>
       <hr>
-      <b-button block variant="danger">Quit Challenge</b-button>
+      <b-button block variant="danger" v-show="isParticipated">Quit Challenge</b-button>
     </b-container>
   </div>
 </template>
 
 <script>
 import bravadoNavigation from '~/components/bravadoNavigation.vue'
-
+import { mapActions } from 'vuex'
 export default {
   layout: 'user',
   beforeMount: function() {
@@ -49,11 +57,19 @@ export default {
       this.$router.push({ path: '/profile' })
     } else {
       this.$store.dispatch('challenge/GET_CHALLENGE', { id })
+      this.isParticipated =
+        this.challengeId in this.$store.state.user.participations
     }
   },
   filters: {
     prettyDate: function(val) {
       if (val !== undefined) return val.split('T')[0]
+    }
+  },
+  data: function() {
+    return {
+      isParticipated: null,
+      upLoader: null
     }
   },
   computed: {
@@ -82,7 +98,26 @@ export default {
       return this.$store.state.challenge.participant
     }
   },
-  components: { bravadoNavigation }
+  components: { bravadoNavigation },
+  methods: {
+    ...mapActions({
+      joinChallenge(dispatch) {
+        let self = this
+        this.upLoader = true
+        dispatch('user/JOIN_CHALLENGE', {
+          challengeId: self.challengeId,
+          onSuccess: function() {
+            self.isParticipated = true
+            self.upLoader = false
+          },
+          onFailure: function(err) {
+            self.isParticipated = false
+            self.upLoader = false
+          }
+        })
+      }
+    })
+  }
 }
 </script>
 

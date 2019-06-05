@@ -9,7 +9,7 @@ export const state = () => ({
   birthDate: '',
   gender: '',
   role: '',
-  participations: []
+  participations: {}
 })
 
 export const mutations = {
@@ -94,6 +94,38 @@ export const actions = {
           onSuccess()
         }
       } else {
+      }
+    } catch (err) {
+      onFailure(err)
+    }
+  },
+  /**
+   * User joins challenge with challengeId
+   */
+
+  async JOIN_CHALLENGE(
+    { rootState, commit, dispatch },
+    { challengeId, onSuccess, onFailure }
+  ) {
+    try {
+      const { data: req } = await axios.post(
+        '/api/challenge/join',
+        {
+          challengeId
+        },
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
+        }
+      )
+      if (req.status === 'error') {
+        onFailure(req.msg)
+        return
+      }
+      if (req.status === 'success') {
+        await dispatch('GET_PARTICIPATIONS')
+        onSuccess()
       }
     } catch (err) {
       onFailure(err)
