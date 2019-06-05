@@ -30,7 +30,7 @@ connection.query(
   `
 CREATE TABLE IF NOT EXISTS category (
     name varchar(255) NOT NULL UNIQUE,
-    creationDate date NOT NULL,
+    creationDate datetime DEFAULT CURRENT_TIMESTAMP,
     content TEXT,
     CONSTRAINT category_pk PRIMARY KEY (name)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS progress (
     progressId int NOT NULL AUTO_INCREMENT UNIQUE,
     challengeId int NOT NULL,
     userId int NOT NULL,
-    date date NOT NULL,
+    date datetime DEFAULT CURRENT_TIMESTAMP,
     status varchar(255) NOT NULL,
     CONSTRAINT progress_pk PRIMARY KEY (progressId),
     CONSTRAINT progress_challenge FOREIGN KEY progress_challenge (challengeId)
