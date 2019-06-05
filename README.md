@@ -1,22 +1,33 @@
-# bravado
+### installation
 
-> habit-tracker and challenge manager in social way
+- run the docker
+  `npm run docker`
+- create database as `bravado`
+- create tables
+  `npm run setup`
+- run!
+  `npm run dev`
 
-## Build Setup
+### todos
 
-``` bash
-# install dependencies
-$ npm install
+- [x] Login
+- [x] Register
+- [x] Change Account Settings
+- [ ] Challenge [CRUD]
+  - [x] Create Challenge
+  - [ ] Confirm Challenge
+  - [ ] Reject Challenge
+  - [ ] Delete Challenge
+  - [ ] Update Challenge
+- [ ] Quit Challenge
+- [ ] Manage Category [CRUD]
+- [ ] Delete User
+- [ ] Comment Challenge
+- [ ] Earn Reward
+- [ ] Comment Challenge
+- [ ] Assign submission
+- [ ] Vote submission
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+### Use case diagram
 
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+![Use Case diagram](./docs/img/use_case.png)
