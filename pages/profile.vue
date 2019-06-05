@@ -149,7 +149,16 @@
             >Your challenges are not found.</b-alert>
             <b-card-group v-else columns>
               <b-card v-for="(challenge,i) in userChallenges" :key="i">
-                <b-card-title>{{challenge.title}}</b-card-title>
+                <nuxt-link
+                  :to="{
+                    name: `challenge`,
+                    params: {
+                      id : challenge.challengeId
+                    }
+                  }"
+                >
+                  <b-card-title>{{challenge.title}}</b-card-title>
+                </nuxt-link>
                 <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
                 <!--
                 <div slot="header">
