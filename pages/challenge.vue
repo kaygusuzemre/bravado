@@ -40,7 +40,7 @@
         </b-tabs>
       </b-card>
       <hr>
-      <b-button block variant="danger" v-show="isParticipated">Quit Challenge</b-button>
+      <b-button block variant="danger" v-show="isParticipated" @click="quitChallenge">Quit Challenge</b-button>
     </b-container>
   </div>
 </template>
@@ -58,7 +58,9 @@ export default {
     } else {
       this.$store.dispatch('challenge/GET_CHALLENGE', { id })
       this.isParticipated =
-        this.challengeId in this.$store.state.user.participations
+        this.$store.state.user.participations[this.challengeId] !== undefined &&
+        this.$store.state.user.participations[this.challengeId].status ===
+          'inProgress'
     }
   },
   filters: {
@@ -101,6 +103,21 @@ export default {
   components: { bravadoNavigation },
   methods: {
     ...mapActions({
+      quitChallenge(dispatch) {
+        let self = this
+        this.upLoader = true
+        dispatch('user/QUIT_CHALLENGE', {
+          challengeId: self.challengeId,
+          onSuccess: function() {
+            self.isParticipated = false
+            self.upLoader = false
+          },
+          onFailure: function(err) {
+            self.isParticipated = true
+            self.upLoader = false
+          }
+        })
+      },
       joinChallenge(dispatch) {
         let self = this
         this.upLoader = true

@@ -130,5 +130,38 @@ export const actions = {
     } catch (err) {
       onFailure(err)
     }
+  },
+
+  /**
+   * User quits challenge with challengeId
+   */
+
+  async QUIT_CHALLENGE(
+    { rootState, commit, dispatch },
+    { challengeId, onSuccess, onFailure }
+  ) {
+    try {
+      const { data: req } = await axios.post(
+        '/api/challenge/quit',
+        {
+          challengeId
+        },
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
+        }
+      )
+      if (req.status === 'error') {
+        onFailure(req.msg)
+        return
+      }
+      if (req.status === 'success') {
+        await dispatch('GET_PARTICIPATIONS')
+        onSuccess()
+      }
+    } catch (err) {
+      onFailure(err)
+    }
   }
 }

@@ -199,4 +199,33 @@ export default function(router, db, cache) {
       )
     }
   )
+  /**
+   * Quit participated challenge
+   * @only  user
+   *
+   * @param int   challengeId;
+   * @param int   userId
+   */
+  router.post(
+    '/challenge/quit',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `UPDATE progress SET status='gaveUp' WHERE challengeId=? AND  userId=?`,
+        [req.body.challengeId, req.user.userId],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else
+            res.json({
+              status: 'success'
+            })
+        }
+      )
+    }
+  )
 }

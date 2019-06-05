@@ -22,7 +22,7 @@
   - [x] About page
   - [ ] Feeds page
   - [ ] Participants page
-  - [ ] Quit Challenge
+  - [x] Quit Challenge
   - [x] Join Challange
 - [ ] Challenge API [CRUD]
   - [x] Create Challenge
