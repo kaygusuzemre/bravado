@@ -143,4 +143,26 @@ export default function(router, db, cache) {
    *        @elseIf req.user.role === admin
    */
   router.post('/challenge/delete', (req, res) => {})
+
+  /**
+   * Get specific challenge
+   * @only  user
+   *
+   * @param int   id;
+   */
+  router.get('/challenge/get/:id', (req, res) => {
+    db.query(
+      `SELECT * FROM challenge WHERE challengeId=?`,
+      [req.params.id],
+      function(error, results, fields) {
+        if (error)
+          res.json({
+            status: 'error',
+            msg: 'Unknown error',
+            error: error
+          })
+        else res.json(results)
+      }
+    )
+  })
 }
