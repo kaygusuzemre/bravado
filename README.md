@@ -23,7 +23,7 @@
   - [ ] Feeds page
   - [ ] Participants page
   - [ ] Quit Challenge
-  - [ ] Join Challange
+  - [x] Join Challange
 - [ ] Challenge API [CRUD]
   - [x] Create Challenge
   - [x] Get specific Challange
