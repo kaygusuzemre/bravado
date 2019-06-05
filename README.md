@@ -14,9 +14,9 @@
 - [x] Register
 - [ ] User Profile Page
   - [x] Change Account Settings
-  - [ ] Completed Challenges
+  - [x] Completed Challenges
   - [x] Created Challenges
-  - [ ] In progress challanges
+  - [x] In progress challanges
   - [ ] Stability graph
 - [ ] Challenge Page
   - [x] About page
