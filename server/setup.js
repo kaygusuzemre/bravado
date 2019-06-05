@@ -31,7 +31,7 @@ connection.query(
 CREATE TABLE IF NOT EXISTS category (
     name varchar(255) NOT NULL UNIQUE,
     creationDate date NOT NULL,
-    content varchar(255) NOT NULL,
+    content TEXT,
     CONSTRAINT category_pk PRIMARY KEY (name)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 `,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS challenge (
     challengeId int NOT NULL UNIQUE AUTO_INCREMENT,
     owner int NOT NULL,
     title varchar(255) NOT NULL,
-    content varchar(255) NOT NULL,
+    content TEXT,
     startDate date NOT NULL,
     finishDate date NOT NULL,
     reward json NOT NULL,
@@ -124,7 +124,7 @@ connection.query(
 CREATE TABLE IF NOT EXISTS submission (
     submissionId int NOT NULL AUTO_INCREMENT UNIQUE,
     progressId int NOT NULL,
-    content varchar(255) NOT NULL,
+    content TEXT NOT NULL,
     CONSTRAINT submission_pk PRIMARY KEY (submissionId),
     CONSTRAINT submission_progress FOREIGN KEY submission_progress (progressId) REFERENCES progress (progressId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
