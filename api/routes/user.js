@@ -37,7 +37,13 @@ export default function(router, db, cache) {
     utils(db, cache).restrictByUserRole('user'),
     (req, res) => {
       db.query(
-        `SELECT * FROM progress WHERE userId=?`,
+        `
+        SELECT challenge.challengeId,challenge.startDate,challenge.finishDate,challenge.reward,status,challenge.title
+         FROM progress
+          INNER JOIN challenge
+          ON challenge.challengeId = progress.challengeId
+        WHERE userId = ?
+        `,
         [req.user.userId],
         function(error, results, fields) {
           if (error)

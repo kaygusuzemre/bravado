@@ -129,13 +129,73 @@
 
       <b-row>
         <b-col md="12">
-          <b-card border-variant="light" header="Completed" class="text-center"></b-card>
+          <b-card border-variant="light" header="Completed" class="text-center">
+            <b-alert
+              variant="warning"
+              v-if="completedChallenges.length < 1"
+              show
+            >Your completed challenges are not found.</b-alert>
+            <b-card-group v-else columns>
+              <b-card v-for="(challenge,index) in completedChallenges" :key="index">
+                <nuxt-link
+                  :to="{
+                    name: `challenge`,
+                    params: {
+                      id : challenge.challengeId
+                    }
+                  }"
+                >
+                  <b-card-title>{{challenge.title}}</b-card-title>
+                </nuxt-link>
+                <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
+
+                <div slot="footer">
+                  <b-card-text
+                    class="small text-muted float-left"
+                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                  <b-card-text
+                    class="small text-muted float-right"
+                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                </div>
+              </b-card>
+            </b-card-group>
+          </b-card>
         </b-col>
       </b-row>
       <hr>
       <b-row>
         <b-col md="12">
-          <b-card border-variant="light" header="In Progress" class="text-center"></b-card>
+          <b-card border-variant="light" header="In Progress" class="text-center">
+            <b-alert
+              variant="warning"
+              v-if="inProgressChallenges.length < 1"
+              show
+            >Your in-progress challenges are not found.</b-alert>
+            <b-card-group v-else columns>
+              <b-card v-for="(challenge,index) in inProgressChallenges" :key="index">
+                <nuxt-link
+                  :to="{
+                    name: `challenge`,
+                    params: {
+                      id : challenge.challengeId
+                    }
+                  }"
+                >
+                  <b-card-title>{{challenge.title}}</b-card-title>
+                </nuxt-link>
+                <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
+
+                <div slot="footer">
+                  <b-card-text
+                    class="small text-muted float-left"
+                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                  <b-card-text
+                    class="small text-muted float-right"
+                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                </div>
+              </b-card>
+            </b-card-group>
+          </b-card>
         </b-col>
       </b-row>
       <hr>
@@ -230,6 +290,15 @@ export default {
     userChallenges: function() {
       const challenges = this.$store.state.user.challengeOwner.challenges
       return challenges
+    },
+    inProgressChallenges: function() {
+      return this.progressesByStatus('inProgress')
+    },
+    completedChallenges: function() {
+      return this.progressesByStatus('complated')
+    },
+    gaveUpChallenges: function() {
+      return this.progressesByStatus('gaveUp')
     }
   },
   filters: {
@@ -239,6 +308,15 @@ export default {
   },
   components: { bravadoNavigation, stability, drawBadge },
   methods: {
+    progressesByStatus: function(status) {
+      const participatons = this.$store.state.user.participations
+      let inProgress = []
+      for (const p in participatons) {
+        if (participatons[p].status === status)
+          inProgress.push(participatons[p])
+      }
+      return inProgress
+    },
     daysBetweenDates(first, second) {
       var date2 = new Date(first)
       var date1 = new Date(second)
