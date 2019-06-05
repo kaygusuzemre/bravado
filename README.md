@@ -12,19 +12,29 @@
 
 - [x] Login
 - [x] Register
-- [x] Change Account Settings
-- [ ] Challenge [CRUD]
+- [ ] User Profile Page
+  - [x] Change Account Settings
+  - [ ] Completed Challenges
+  - [x] Created Challenges
+  - [ ] In progress challanges
+  - [ ] Stability graph
+- [ ] Challenge Page
+  - [x] About page
+  - [ ] Feeds page
+  - [ ] Participants page
+  - [ ] Quit Challenge
+  - [ ] Join Challange
+- [ ] Challenge API [CRUD]
   - [x] Create Challenge
+  - [x] Get specific Challange
   - [ ] Confirm Challenge
   - [ ] Reject Challenge
   - [ ] Delete Challenge
   - [ ] Update Challenge
-- [ ] Quit Challenge
 - [ ] Manage Category [CRUD]
 - [ ] Delete User
 - [ ] Comment Challenge
 - [ ] Earn Reward
-- [ ] Comment Challenge
 - [ ] Assign submission
 - [ ] Vote submission
 
