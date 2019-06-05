@@ -201,6 +201,7 @@ export default {
   beforeMount() {
     this.$store.dispatch('user/GET_ME'),
       this.$store.dispatch('user/challengeOwner/GET_CHALLANGES')
+    this.$store.dispatch('user/GET_PARTICIPATIONS')
   },
   data() {
     let data = {

@@ -27,6 +27,37 @@ export default function(router, db, cache) {
     }
   )
 
+  /**
+   * Challanges which are participated by user
+   * @only user
+   */
+
+  router.get(
+    '/user/participations',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `SELECT * FROM progress WHERE userId=?`,
+        [req.user.userId],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else
+            res.json(
+              results.reduce((obj, item) => {
+                obj[item.challengeId] = item
+                return obj
+              }, {})
+            )
+        }
+      )
+    }
+  )
+
   router.post(
     '/user/update',
     utils(db, cache).restrictByUserRole('user'),
