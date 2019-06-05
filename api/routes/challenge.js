@@ -150,19 +150,53 @@ export default function(router, db, cache) {
    *
    * @param int   id;
    */
-  router.get('/challenge/get/:id', (req, res) => {
-    db.query(
-      `SELECT * FROM challenge WHERE challengeId=?`,
-      [req.params.id],
-      function(error, results, fields) {
-        if (error)
-          res.json({
-            status: 'error',
-            msg: 'Unknown error',
-            error: error
-          })
-        else res.json(results)
-      }
-    )
-  })
+  router.get(
+    '/challenge/get/:id',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `SELECT * FROM challenge WHERE challengeId=?`,
+        [req.params.id],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else res.json(results)
+        }
+      )
+    }
+  )
+
+  /**
+   * Join specific challenge
+   * @only  user
+   *
+   * @param int   challengeId;
+   * @param int   userId
+   */
+  router.post(
+    '/challenge/join',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `INSERT INTO progress (challengeId,userId,status) VALUES (?,?,?)`,
+        [req.body.challengeId, req.user.userId, 'inProgress'],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else
+            res.json({
+              status: 'success'
+            })
+        }
+      )
+    }
+  )
 }
