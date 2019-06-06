@@ -11,7 +11,17 @@
         </div>
       </template>
       <template v-else>
-        <b-button block variant="primary" v-if="isParticipated">Submit Assignment</b-button>
+        <nuxt-link
+          v-if="isParticipated"
+          :to="{
+            name: `assignment`,
+            params: {
+               id : $route.params.id
+            }
+           }"
+        >
+          <b-button block variant="primary">Submit Assignment</b-button>
+        </nuxt-link>
         <b-button block variant="info" v-else @click="joinChallenge">Join Challenge</b-button>
       </template>
       <hr>
