@@ -8,7 +8,7 @@ export const state = () => ({
   finishDate: undefined,
   goal: undefined,
   reward: {},
-  participant: {}
+  participants: {}
 })
 
 export const mutations = {
@@ -31,7 +31,7 @@ export const mutations = {
     state.reward = JSON.parse(reward)
   },
   SET_PARTICIPANTS: function(state, participants) {
-    state.participant = Object.assign(state.participant, participants)
+    state.participants = Object.assign(state.participants, participants)
   },
   RESET_ALL: function(state) {
     state.id = undefined
@@ -41,7 +41,7 @@ export const mutations = {
     state.finishDate = undefined
     state.goal = undefined
     state.reward = undefined
-    state.participant = {}
+    state.participants = {}
   }
 }
 
@@ -54,6 +54,16 @@ export const actions = {
         }
       })
       if (data.length) commit('SET_CHALLENGE', data[0])
+    } catch (error) {}
+  },
+  async GET_PARTICIPANTS({ rootState, commit }, { id }) {
+    try {
+      const { data } = await axios.get(`/api/challenge/participants/${id}`, {
+        headers: {
+          authorization: `Bearer ${rootState.auth.token}`
+        }
+      })
+      commit('SET_PARTICIPANTS', data)
     } catch (error) {}
   }
 }

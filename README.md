@@ -21,7 +21,7 @@
 - [ ] Challenge Page
   - [x] About page
   - [ ] Feeds page
-  - [ ] Participants page
+  - [x] Participants page
   - [x] Quit Challenge
   - [x] Join Challange
 - [ ] Challenge API [CRUD]

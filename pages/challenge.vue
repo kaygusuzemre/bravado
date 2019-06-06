@@ -45,7 +45,21 @@
             <b-card-text>Tab Contents 2</b-card-text>
           </b-tab>
           <b-tab title="Participants">
-            <b-card-text>Tab Contents 2</b-card-text>
+            <b-card-text>
+              <b-card
+                :title="`${participate.name} ${participate.surname}`"
+                img-src="http://localhost:3000/icons/svg/042-winner.svg"
+                img-alt="Image"
+                img-width="50"
+                style="max-width: 20rem;"
+                v-for="(participate,i) in participants"
+                :key="i"
+              >
+                <b-card-text>GaveUp: {{participate.progress | gaveUp}}</b-card-text>
+                <b-card-text>Completed: {{participate.progress | completed}}</b-card-text>
+                <b-card-text>InProgress: {{participate.progress | inProgress}}</b-card-text>
+              </b-card>
+            </b-card-text>
           </b-tab>
         </b-tabs>
       </b-card>
@@ -71,11 +85,25 @@ export default {
         this.$store.state.user.participations[this.challengeId] !== undefined &&
         this.$store.state.user.participations[this.challengeId].status ===
           'inProgress'
+
+      this.$store.dispatch('challenge/GET_PARTICIPANTS', { id })
     }
   },
   filters: {
     prettyDate: function(val) {
       if (val !== undefined) return val.split('T')[0]
+    },
+    gaveUp: function(str) {
+      let obj = JSON.parse(`{${str}}`)
+      return obj.gaveUp >= 1 ? obj.gaveUp : 0
+    },
+    completed: function(str) {
+      let obj = JSON.parse(`{${str}}`)
+      return obj.completed >= 1 ? obj.completed : 0
+    },
+    inProgress: function(str) {
+      let obj = JSON.parse(`{${str}}`)
+      return obj.inProgress >= 1 ? obj.inProgress : 0
     }
   },
   data: function() {
@@ -106,8 +134,8 @@ export default {
     reward: function() {
       return this.$store.state.challenge.reward
     },
-    participant: function() {
-      return this.$store.state.challenge.participant
+    participants: function() {
+      return this.$store.state.challenge.participants
     }
   },
   components: { bravadoNavigation },

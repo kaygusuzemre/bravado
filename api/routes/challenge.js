@@ -228,4 +228,47 @@ export default function(router, db, cache) {
       )
     }
   )
+
+  /**
+   * Challenge participants
+   * @only user
+   *
+   * @param int challengeId
+   */
+
+  router.get(
+    '/challenge/participants/:id',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `
+        SELECT GROUP_CONCAT(status) as progress, name,surname,gender,userID FROM (
+            SELECT  CONCAT('"',status,'":',count) as status, name,surname,gender,userID FROM (
+                SELECT score.status, score.userID, score.count, user.name, user.surname, user.gender FROM (
+                    SELECT userID, count(userID) as count, status FROM progress WHERE challengeId=? GROUP BY status , userID
+                ) AS score
+                INNER JOIN user ON score.userID = user.userID
+            ) as result
+        ) as concatedTable GROUP BY userID
+        `,
+        [req.params.id],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else
+            res.json(
+              // Array to object
+              results.reduce((obj, item) => {
+                obj[item.userID] = item
+                return obj
+              }, {})
+            )
+        }
+      )
+    }
+  )
 }
