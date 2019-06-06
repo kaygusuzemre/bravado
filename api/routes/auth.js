@@ -34,7 +34,10 @@ export default function(router, db, cache) {
             const token = utils(db, cache).createAuthToken(session)
 
             cache.set(session, results[0].id)
-            res.cookie('token', token, { maxAge: 900000, httpOnly: true })
+            res.cookie('token', token, {
+              maxAge: 1000 * 60 * 60 * 24, // 1 SECOND > 1 MINUTE > 1 HOUR > 1 DAY
+              httpOnly: true
+            })
             res.header('authorization', `Bearer ${token}`)
             res.json({ status: 'success', msg: 'success', token: token })
           } else
