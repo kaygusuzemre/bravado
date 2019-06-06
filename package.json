@@ -22,6 +22,7 @@
     "@nuxtjs/pwa": "^2.6.0",
     "bootstrap": "^4.1.3",
     "bootstrap-vue": "^2.0.0-rc.21",
+    "chance": "^1.0.18",
     "cookieparser": "^0.1.0",
     "cross-env": "^5.2.0",
     "defined": "^1.0.0",
