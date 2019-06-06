@@ -1,7 +1,6 @@
 import axios from 'axios'
-var Chance = require('chance');
-var chance = new Chance();
-
+var Chance = require('chance')
+var chance = new Chance()
 
 const endpoint = 'http://localhost:3000/api/auth/register'
 describe('/api/auth/register', () => {
