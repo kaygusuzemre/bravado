@@ -13,18 +13,28 @@
                 Sort
                 <strong>progresses</strong>
               </template>
-              <b-dropdown-item href="#">Time remain</b-dropdown-item>
-              <b-dropdown-item href="#">Assignment remain</b-dropdown-item>
+              <b-dropdown-item href="#" @click="sortByTime">Remaining time</b-dropdown-item>
+              <b-dropdown-item href="#" @click="sortByAssignment">Remaining assignment</b-dropdown-item>
             </b-dropdown>
             <hr>
             <b-list-group>
+              <div class="d-flex justify-content-center mb-3" v-if="progresses === null">
+                <b-spinner label="Spinning"></b-spinner>
+              </div>
+              <b-alert
+                variant="warning"
+                v-else-if="Object.keys(progresses).length < 1"
+                show
+              >Your progress can not be calculated, please start to submit an assignment to challenge that you participated</b-alert>
               <b-list-group-item
+                v-else
                 href="#some-link"
-                v-for="(ob,i) in [0,1,2,3,4,5,6,7,8,9,10]"
+                v-for="(progress,i) in progresses"
                 :key="i"
               >
-                Reading Challenge {{i}} days.
-                <b-progress :value="100-i*10" :max="100" show-progress animated></b-progress>
+                {{progress.title}}
+                <b-progress :value="progress.score" :max="progress.goal" show-progress animated></b-progress>
+                <small class="float-right">10 remain in 30 days</small>
               </b-list-group-item>
             </b-list-group>
           </b-card>
@@ -83,10 +93,39 @@
 
 <script>
 import bravadoNavigation from '~/components/bravadoNavigation.vue'
-
+import { mapActions } from 'vuex'
 export default {
   layout: 'user',
-  components: { bravadoNavigation }
+  components: { bravadoNavigation },
+  created() {
+    this.GET_PROGRESSES()
+  },
+  data() {
+    return {
+      progresses: null
+    }
+  },
+  methods: {
+    sortByTime() {
+      // will be implement
+    },
+    sortByAssignment() {
+      // will be implement
+    },
+    ...mapActions({
+      GET_PROGRESSES(dispatch, params) {
+        let self = this
+        dispatch('user/GET_PROGRESSES', {
+          onSuccess: progresses => {
+            self.progresses = progresses
+          },
+          onFailure: () => {
+            alert(2)
+          }
+        })
+      }
+    })
+  }
 }
 </script>
 

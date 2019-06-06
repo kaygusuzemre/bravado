@@ -163,5 +163,30 @@ export const actions = {
     } catch (err) {
       onFailure(err)
     }
+  },
+
+  /**
+   * User quits challenge with challengeId
+   */
+
+  async GET_PROGRESSES(
+    { rootState, commit, dispatch },
+    { onSuccess, onFailure }
+  ) {
+    try {
+      const { data: req } = await axios.get('/api/user/progresses', {
+        headers: {
+          authorization: `Bearer ${rootState.auth.token}`
+        }
+      })
+      if (req.status === 'error') {
+        onFailure(req.msg)
+        return
+      }
+
+      onSuccess(req)
+    } catch (err) {
+      onFailure(err)
+    }
   }
 }

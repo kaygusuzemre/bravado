@@ -64,6 +64,46 @@ export default function(router, db, cache) {
     }
   )
 
+  /**
+   * User progress and score according to participated challenges
+   */
+  router.get(
+    '/user/progresses',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      db.query(
+        `
+          SELECT DISTINCT challenge.challengeId, challenge.title, challenge.goal, challenge.finishDate, COUNT(submission.submissionId) as score 
+            FROM progress
+              INNER JOIN submission
+                ON progress.progressId = submission.progressId
+              INNER JOIN rating
+                ON rating.submissionId = submission.submissionId
+              INNER JOIN challenge
+                ON challenge.challengeId = progress.challengeId
+            WHERE progress.status = "inProgress" AND progress.userId = ?
+            GROUP BY challenge.challengeId
+        `,
+        [req.user.userId],
+        function(error, results, fields) {
+          if (error)
+            res.json({
+              status: 'error',
+              msg: 'Unknown error',
+              error: error
+            })
+          else
+            res.json(
+              results.reduce((obj, item) => {
+                obj[item.challengeId] = item
+                return obj
+              }, {})
+            )
+        }
+      )
+    }
+  )
+
   router.post(
     '/user/update',
     utils(db, cache).restrictByUserRole('user'),
