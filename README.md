@@ -18,6 +18,10 @@
   - [x] Created Challenges
   - [x] In progress challanges
   - [ ] Stability graph
+- [ ] Dashboard Page
+  - [x] User Progress
+  - [ ] Feeds
+  - [ ] Search challenge form
 - [ ] Challenge Page
   - [x] About page
   - [ ] Feeds page
