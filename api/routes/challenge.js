@@ -37,9 +37,10 @@ export default function(router, db, cache) {
       let now = new Date().toMysqlFormat()
       if (filter === 'FINISHED') sql += `WHERE finishDate>="${now}" AND `
       else if (filter === 'CONTINUING') sql += `WHERE finishDate<="${now}" AND `
-      else if (search !== '' && search !== undefined) sql += ` WHERE `
+      else if (search !== '' && search !== undefined && search !== null)
+        sql += ` WHERE `
 
-      if (search !== '' && search !== undefined)
+      if (search !== '' && search !== undefined && search !== null)
         sql += ` title LIKE "%${search}%" `
       if (sort === 'ASC') sql += `ORDER BY startDate ASC `
       else if (sort === 'DESC') sql += `ORDER BY startDate DESC `
