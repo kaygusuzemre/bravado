@@ -4,7 +4,9 @@ const session = require('express-session')
 
 module.exports = {
   mode: 'universal',
-
+  env: {
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000'
+  },
   /*
    ** Headers of the page
    */
@@ -48,6 +50,8 @@ module.exports = {
    */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+    baseURL: process.env.BASE_URL || 'http://localhost:3000',
+    browserBaseURL: process.env.BASE_URL || 'http://localhost:3000'
   },
 
   /*

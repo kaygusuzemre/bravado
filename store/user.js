@@ -50,24 +50,30 @@ export const actions = {
    */
   async GET_ME({ rootState, commit }) {
     try {
-      const { data } = await axios.get('/api/auth/me', {
+      const { data } = await axios.get(process.env.baseUrl + '/api/auth/me', {
         headers: {
           authorization: `Bearer ${rootState.auth.token}`
         }
       })
+
       commit('UPDATE_USER', data)
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   },
   /**
    * Get challange ids that participated by user.
    */
   async GET_PARTICIPATIONS({ rootState, commit }) {
     try {
-      const { data } = await axios.get('/api/user/participations', {
-        headers: {
-          authorization: `Bearer ${rootState.auth.token}`
+      const { data } = await axios.get(
+        process.env.baseUrl + '/api/user/participations',
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
         }
-      })
+      )
       commit('SET_PARTICIPATIONS', data)
     } catch (error) {}
   },
@@ -78,11 +84,15 @@ export const actions = {
    */
   async update({ rootState, commit }, { user, onSuccess, onFailure }) {
     try {
-      const { data: req } = await axios.post('/api/user/update', user, {
-        headers: {
-          authorization: `Bearer ${rootState.auth.token}`
+      const { data: req } = await axios.post(
+        process.env.baseUrl + '/api/user/update',
+        user,
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
         }
-      })
+      )
       if (req.status === 'error' || req.status === 'success') {
         onFailure(req.msg)
         if (req.status === 'success') {
@@ -109,7 +119,7 @@ export const actions = {
   ) {
     try {
       const { data: req } = await axios.post(
-        '/api/challenge/join',
+        process.env.baseUrl + '/api/challenge/join',
         {
           challengeId
         },
@@ -142,7 +152,7 @@ export const actions = {
   ) {
     try {
       const { data: req } = await axios.post(
-        '/api/challenge/quit',
+        process.env.baseUrl + '/api/challenge/quit',
         {
           challengeId
         },
@@ -174,11 +184,14 @@ export const actions = {
     { onSuccess, onFailure }
   ) {
     try {
-      const { data: req } = await axios.get('/api/user/progresses', {
-        headers: {
-          authorization: `Bearer ${rootState.auth.token}`
+      const { data: req } = await axios.get(
+        process.env.baseUrl + '/api/user/progresses',
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
         }
-      })
+      )
       if (req.status === 'error') {
         onFailure(req.msg)
         return

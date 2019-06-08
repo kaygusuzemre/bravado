@@ -48,21 +48,27 @@ export const mutations = {
 export const actions = {
   async GET_CHALLENGE({ rootState, commit }, { id }) {
     try {
-      const { data } = await axios.get(`/api/challenge/get/${id}`, {
-        headers: {
-          authorization: `Bearer ${rootState.auth.token}`
+      const { data } = await axios.get(
+        process.env.baseUrl + `/api/challenge/get/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
         }
-      })
+      )
       if (data.length) commit('SET_CHALLENGE', data[0])
     } catch (error) {}
   },
   async GET_PARTICIPANTS({ rootState, commit }, { id }) {
     try {
-      const { data } = await axios.get(`/api/challenge/participants/${id}`, {
-        headers: {
-          authorization: `Bearer ${rootState.auth.token}`
+      const { data } = await axios.get(
+        process.env.baseUrl + `/api/challenge/participants/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${rootState.auth.token}`
+          }
         }
-      })
+      )
       commit('SET_PARTICIPANTS', data)
     } catch (error) {}
   }
