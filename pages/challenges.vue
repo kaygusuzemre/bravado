@@ -96,7 +96,12 @@ export default {
     }
   },
   async created() {
+    if(this.$route.params !== undefined)
+    this.args = {
+      search : this.$route.params.search
+    }
     this.getList()
+    this.args = {};
   },
   methods: {
     getList: async function(args) {

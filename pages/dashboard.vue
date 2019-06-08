@@ -41,8 +41,8 @@
         </b-col>
         <b-col>
           <b-card border-variant="light" header="Search a challenge" class="text-center">
-            <b-form inline>
-              <b-input placeholder="Write keywords then enter" class="w-100"></b-input>
+            <b-form @submit=searchChallenge inline>
+              <b-input v-model="search" placeholder="Write keywords then enter" class="w-100"></b-input>
             </b-form>
           </b-card>
           <hr>
@@ -102,10 +102,15 @@ export default {
   },
   data() {
     return {
-      progresses: null
+      progresses: null,
+      search: null,
     }
   },
   methods: {
+    searchChallenge(e) {
+      e.preventDefault()
+      this.$router.push({ name: 'challenges', params: { search: this.search } })
+    },
     sortByTime() {
       // will be implement
     },

@@ -21,7 +21,7 @@
 - [ ] Dashboard Page
   - [x] User Progress
   - [ ] Feeds
-  - [ ] Search challenge form
+  - [x] Search challenge form
 - [ ] Challenge Page
   - [x] About page
   - [ ] Feeds page
