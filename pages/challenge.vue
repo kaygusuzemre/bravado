@@ -74,19 +74,18 @@ import bravadoNavigation from '~/components/bravadoNavigation.vue'
 import { mapActions } from 'vuex'
 export default {
   layout: 'user',
-  beforeMount: function() {
-    const { id } = this.$route.params
+  async asyncData({ store, redirect, route }) {
+    const { id } = route.params
     if (id === undefined) {
-      alert('Challenge is not found')
-      this.$router.push({ path: '/profile' })
+      redirect('/profile')
     } else {
-      this.$store.dispatch('challenge/GET_CHALLENGE', { id })
-      this.isParticipated =
-        this.$store.state.user.participations[this.challengeId] !== undefined &&
-        this.$store.state.user.participations[this.challengeId].status ===
-          'inProgress'
+      await store.dispatch('challenge/GET_CHALLENGE', { id })
+      const isParticipated =
+        store.state.user.participations[id] !== undefined &&
+        store.state.user.participations[id].status === 'inProgress'
 
-      this.$store.dispatch('challenge/GET_PARTICIPANTS', { id })
+      await store.dispatch('challenge/GET_PARTICIPANTS', { id })
+      return { isParticipated }
     }
   },
   filters: {
@@ -108,7 +107,6 @@ export default {
   },
   data: function() {
     return {
-      isParticipated: null,
       upLoader: null
     }
   },
@@ -139,6 +137,9 @@ export default {
     }
   },
   components: { bravadoNavigation },
+  destroyed() {
+    this.$store.commit('challenge/RESET_ALL')
+  },
   methods: {
     ...mapActions({
       quitChallenge(dispatch) {

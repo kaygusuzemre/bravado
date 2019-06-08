@@ -147,7 +147,7 @@
                 >
                   <b-card-title>{{challenge.title}}</b-card-title>
                 </nuxt-link>
-                <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
+                <drawBadge :id="'p35-'+index" :badge="JSON.parse(challenge.reward)"></drawBadge>
 
                 <div slot="footer">
                   <b-card-text
@@ -183,7 +183,7 @@
                 >
                   <b-card-title>{{challenge.title}}</b-card-title>
                 </nuxt-link>
-                <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
+                <drawBadge :id="'p25-'+index" :badge="JSON.parse(challenge.reward)"></drawBadge>
 
                 <div slot="footer">
                   <b-card-text
@@ -208,19 +208,20 @@
               show
             >Your challenges are not found.</b-alert>
             <b-card-group v-else columns>
-              <b-card v-for="(challenge,i) in userChallenges" :key="i">
-                <nuxt-link
-                  :to="{
+              <template v-for="(challenge,i) in userChallenges">
+                <b-card :key="i">
+                  <nuxt-link
+                    :to="{
                     name: `challenge`,
                     params: {
                       id : challenge.challengeId
                     }
                   }"
-                >
-                  <b-card-title>{{challenge.title}}</b-card-title>
-                </nuxt-link>
-                <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
-                <!--
+                  >
+                    <b-card-title>{{challenge.title}}</b-card-title>
+                  </nuxt-link>
+                  <drawBadge :id="'p5-'+i" :badge="JSON.parse(challenge.reward)"></drawBadge>
+                  <!--
                 <div slot="header">
                   <b-progress
                     :max="daysBetweenDates(challenge.startDate, challenge.finishDate)"
@@ -232,16 +233,18 @@
                       variant="secondary"
                     ></b-progress-bar>
                   </b-progress>
-                </div>-->
-                <div slot="footer">
-                  <b-card-text
-                    class="small text-muted float-left"
-                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
-                  <b-card-text
-                    class="small text-muted float-right"
-                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
-                </div>
-              </b-card>
+                  </div>-->
+                  <div slot="footer">
+                    <b-card-text
+                      class="small text-muted float-left"
+                    >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                    <b-card-text
+                      class="small text-muted float-right"
+                    >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                  </div>
+                </b-card>
+                <hr v-if="i % 2 === 0 && i !== 0" :key="i">
+              </template>
             </b-card-group>
           </b-card>
         </b-col>
@@ -258,10 +261,10 @@ import stability from '~/components/stability.vue'
 import drawBadge from '~/components/drawBadge.vue'
 export default {
   layout: 'user',
-  beforeMount() {
-    this.$store.dispatch('user/GET_ME'),
-      this.$store.dispatch('user/challengeOwner/GET_CHALLANGES')
-    this.$store.dispatch('user/GET_PARTICIPATIONS')
+  async fetch({ store }) {
+    await store.dispatch('user/GET_ME')
+    await store.dispatch('user/challengeOwner/GET_CHALLANGES')
+    await store.dispatch('user/GET_PARTICIPATIONS')
   },
   data() {
     let data = {
