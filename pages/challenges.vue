@@ -14,56 +14,63 @@
         <b-row>
           <b-col>
             <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-              <b-button-group class="mx-auto">
-                <b-button variant="outline-secondary">&laquo;</b-button>
-                <b-button variant="outline-secondary">&lsaquo;</b-button>
-              </b-button-group>
-              <b-dropdown variant="outline-danger" class="mx-1" right text="Sort by">
-                <b-dropdown-item>Popularity</b-dropdown-item>
-                <b-dropdown-item>Difficulty</b-dropdown-item>
-                <b-dropdown-item>Period</b-dropdown-item>
-                <b-dropdown-item>A-Z</b-dropdown-item>
+              <b-dropdown variant="outline-danger" class="mx-auto" right text="Sort by">
+                <b-dropdown-item @click="getList({sort:`ASC`})">Ascending</b-dropdown-item>
+                <b-dropdown-item @click="getList({sort:`DESC`})">Descending</b-dropdown-item>
               </b-dropdown>
-              <b-dropdown variant="outline-danger" class="mx-1" right text="Filters">
-                <b-dropdown-item>Finished</b-dropdown-item>
-                <b-dropdown-item>Continuing</b-dropdown-item>
+              <b-dropdown variant="outline-danger" class="mx-auto" right text="Filters">
+                <b-dropdown-item @click="getList({sort:`FINISHED`})">Finished</b-dropdown-item>
+                <b-dropdown-item @click="getList({sort:`CONTINUING`})">Continuing</b-dropdown-item>
               </b-dropdown>
-              <b-button-group class="mx-auto">
-                <b-button variant="outline-secondary">&rsaquo;</b-button>
-                <b-button variant="outline-secondary">&raquo;</b-button>
-              </b-button-group>
             </b-button-toolbar>
           </b-col>
           <b-col>
             <b-form class="mx-auto" inline>
-              <b-input placeholder="Write keywords to search then enter" class="w-100"></b-input>
+              <b-input placeholder="Write keywords to search then enter" v-model="search"></b-input>
+
+              <b-button @click="getList({search})">Submit</b-button>
             </b-form>
           </b-col>
         </b-row>
         <hr>
-        <b-row class="pb-5" v-for="(o,i) in [1,2,3,4,5]" :key="i">
-          <b-col v-for="(o,i) in [1,2,3,4]" :key="i">
-            <b-card
-              img-src="https://picsum.photos/600/300/?image=25"
-              img-alt="Image"
-              img-top
-              tag="article"
-            >
-              <nuxt-link
-                :to="{
-                name: `challenge`,
-                params: {
-                  id : 1
-                }
-              }"
-              >
-                <h3>Card Title</h3>
-              </nuxt-link>
-              <b-card-text>Some quick example text to build on the card title and make up the bulk of the card's content.</b-card-text>
+        <b-alert
+          variant="warning"
+          v-if="list && list.length < 1"
+          show
+        >Challenges are not found, please try again.</b-alert>
+        <b-row class="pb-5">
+          <b-card-group columns>
+            <template v-for="(challenge,index) in list">
+              <b-card :key="index">
+                <nuxt-link
+                  :to="{
+                    name: `challenge`,
+                    params: {
+                      id : challenge.challengeId
+                    }
+                  }"
+                >
+                  <h3>{{challenge.title}}</h3>
 
-              <b-progress :value="100-i*10" :max="100" show-progress animated></b-progress>
-            </b-card>
-          </b-col>
+                  <center>
+                    <b-img :src="challenge.reward.imageURL" width="150" height="150"></b-img>
+                  </center>
+                </nuxt-link>
+                <b-card-text>{{challenge.content}}</b-card-text>
+
+                <div slot="footer">
+                  <b-card-text
+                    class="small text-muted float-left"
+                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                  <b-card-text
+                    class="small text-muted float-right"
+                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                </div>
+              </b-card>
+
+              <hr v-if="index % 2 === 0 && index !== 0" :key="index">
+            </template>
+          </b-card-group>
         </b-row>
       </b-card>
     </b-container>
@@ -75,7 +82,38 @@ import bravadoNavigation from '~/components/bravadoNavigation.vue'
 
 export default {
   layout: 'user',
-  components: { bravadoNavigation }
+  components: { bravadoNavigation },
+  data() {
+    return {
+      list: null,
+      search: null,
+      args: {}
+    }
+  },
+  filters: {
+    prettyDate: function(val) {
+      return val.split('T')[0]
+    }
+  },
+  async created() {
+    this.getList()
+  },
+  methods: {
+    getList: async function(args) {
+      this.args = Object.assign(this.args, args)
+      let { data } = await this.$axios.post('/api/challenge/all', this.args, {
+        headers: {
+          authorization: `Bearer ${this.$store.state.auth.token}`
+        }
+      })
+      if (data.length)
+        data = data.map(c => {
+          c.reward = JSON.parse(c.reward)
+          return c
+        })
+      this.list = data
+    }
+  }
 }
 </script>
 
