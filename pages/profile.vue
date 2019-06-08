@@ -136,28 +136,31 @@
               show
             >Your completed challenges are not found.</b-alert>
             <b-card-group v-else columns>
-              <b-card v-for="(challenge,index) in completedChallenges" :key="index">
-                <nuxt-link
-                  :to="{
+              <template v-for="(challenge,index) in completedChallenges">
+                <b-card :key="index">
+                  <nuxt-link
+                    :to="{
                     name: `challenge`,
                     params: {
                       id : challenge.challengeId
                     }
                   }"
-                >
-                  <b-card-title>{{challenge.title}}</b-card-title>
-                </nuxt-link>
-                <drawBadge :id="'p35-'+index" :badge="JSON.parse(challenge.reward)"></drawBadge>
+                  >
+                    <b-card-title>{{challenge.title}}</b-card-title>
+                  </nuxt-link>
+                  <drawBadge :id="'p35-'+index" :badge="JSON.parse(challenge.reward)"></drawBadge>
 
-                <div slot="footer">
-                  <b-card-text
-                    class="small text-muted float-left"
-                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
-                  <b-card-text
-                    class="small text-muted float-right"
-                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
-                </div>
-              </b-card>
+                  <div slot="footer">
+                    <b-card-text
+                      class="small text-muted float-left"
+                    >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                    <b-card-text
+                      class="small text-muted float-right"
+                    >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                  </div>
+                </b-card>
+                <hr v-if="index % 2 === 0 && index > 2" :key="index">
+              </template>
             </b-card-group>
           </b-card>
         </b-col>
@@ -172,28 +175,31 @@
               show
             >Your in-progress challenges are not found.</b-alert>
             <b-card-group v-else columns>
-              <b-card v-for="(challenge,index) in inProgressChallenges" :key="index">
-                <nuxt-link
-                  :to="{
+              <template v-for="(challenge,index) in inProgressChallenges">
+                <b-card :key="index">
+                  <nuxt-link
+                    :to="{
                     name: `challenge`,
                     params: {
                       id : challenge.challengeId
                     }
                   }"
-                >
-                  <b-card-title>{{challenge.title}}</b-card-title>
-                </nuxt-link>
-                <drawBadge :id="'p25-'+index" :badge="JSON.parse(challenge.reward)"></drawBadge>
+                  >
+                    <b-card-title>{{challenge.title}}</b-card-title>
+                  </nuxt-link>
+                  <drawBadge :id="'p25-'+index" :badge="JSON.parse(challenge.reward)"></drawBadge>
 
-                <div slot="footer">
-                  <b-card-text
-                    class="small text-muted float-left"
-                  >Start date {{challenge.startDate | prettyDate}}</b-card-text>
-                  <b-card-text
-                    class="small text-muted float-right"
-                  >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
-                </div>
-              </b-card>
+                  <div slot="footer">
+                    <b-card-text
+                      class="small text-muted float-left"
+                    >Start date {{challenge.startDate | prettyDate}}</b-card-text>
+                    <b-card-text
+                      class="small text-muted float-right"
+                    >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
+                  </div>
+                </b-card>
+                <hr v-if="index % 2 === 0 && index > 2" :key="index">
+              </template>
             </b-card-group>
           </b-card>
         </b-col>
@@ -243,7 +249,7 @@
                     >Finish date {{challenge.finishDate | prettyDate}}</b-card-text>
                   </div>
                 </b-card>
-                <hr v-if="i % 2 === 0 && i !== 0" :key="i">
+                <hr v-if="i % 2 === 0 && i > 2 " :key="i">
               </template>
             </b-card-group>
           </b-card>

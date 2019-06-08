@@ -45,21 +45,23 @@
             <b-card-text>Tab Contents 2</b-card-text>
           </b-tab>
           <b-tab title="Participants">
-            <b-card-text>
-              <b-card
-                :title="`${participate.name} ${participate.surname}`"
-                img-src="http://localhost:3000/icons/svg/042-winner.svg"
-                img-alt="Image"
-                img-width="50"
-                style="max-width: 20rem;"
-                v-for="(participate,i) in participants"
-                :key="i"
-              >
-                <b-card-text>GaveUp: {{participate.progress | gaveUp}}</b-card-text>
-                <b-card-text>Completed: {{participate.progress | completed}}</b-card-text>
-                <b-card-text>InProgress: {{participate.progress | inProgress}}</b-card-text>
-              </b-card>
-            </b-card-text>
+            <b-card-group columns>
+              <template v-for="(participate,i) in participants" v-if="activeUser(participate.progress)">
+                <b-card
+                  :title="`${participate.name} ${participate.surname}`"
+                  img-src="http://localhost:3000/icons/svg/042-winner.svg"
+                  img-alt="Image"
+                  img-width="50"
+                  style="max-width: 20rem;"
+                  :key="i"                  
+                >
+                  <b-card-text>GaveUp: {{participate.progress | gaveUp}}</b-card-text>
+                  <b-card-text>Completed: {{participate.progress | completed}}</b-card-text>
+                  <b-card-text>InProgress: {{participate.progress | inProgress}}</b-card-text>
+                </b-card>
+                <hr v-if="i % 2 === 0 && i !== 0" :key="i">
+              </template>
+            </b-card-group>
           </b-tab>
         </b-tabs>
       </b-card>
@@ -133,14 +135,19 @@ export default {
       return this.$store.state.challenge.reward
     },
     participants: function() {
+      console.log("degisti")
       return this.$store.state.challenge.participants
-    }
+    }    
   },
   components: { bravadoNavigation },
   destroyed() {
     this.$store.commit('challenge/RESET_ALL')
   },
   methods: {
+    activeUser: function (str) {
+      const obj = JSON.parse(`{${str}}`)
+      return obj.inProgress >= 1  ? true: false     
+    },    
     ...mapActions({
       quitChallenge(dispatch) {
         let self = this
@@ -150,6 +157,9 @@ export default {
           onSuccess: function() {
             self.isParticipated = false
             self.upLoader = false
+            dispatch('challenge/GET_PARTICIPANTS', {
+              id: self.$route.params.id
+            })
           },
           onFailure: function(err) {
             self.isParticipated = true
@@ -165,6 +175,9 @@ export default {
           onSuccess: function() {
             self.isParticipated = true
             self.upLoader = false
+            dispatch('challenge/GET_PARTICIPANTS', {
+              id: self.$route.params.id
+            })
           },
           onFailure: function(err) {
             self.isParticipated = false
