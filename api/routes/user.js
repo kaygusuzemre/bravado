@@ -38,10 +38,10 @@ export default function(router, db, cache) {
     (req, res) => {
       db.query(
         `
-        SELECT challenge.challengeId,challenge.startDate,challenge.finishDate,challenge.reward,status,challenge.title
+        SELECT progress.progressId, challenge.challengeId,challenge.startDate,challenge.finishDate,challenge.reward,status,challenge.title
          FROM progress
           INNER JOIN challenge
-          ON challenge.challengeId = progress.challengeId
+          ON challenge.challengeId = progress.challengeId  AND progress.status = 'inProgress'
         WHERE userId = ?
         `,
         [req.user.userId],
