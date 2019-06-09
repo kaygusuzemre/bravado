@@ -114,7 +114,7 @@
               >
                 <p>
                   Challenge succuessfuly created.
-                  Redirecting {{ dismissCountDown }} seconds...
+                  Redirecting in {{ dismissCountDown }} seconds...
                 </p>
                 <b-progress variant="success" :max="5" :value="dismissCountDown" height="4px"></b-progress>
               </b-alert>
