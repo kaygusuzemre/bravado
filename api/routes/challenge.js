@@ -2,8 +2,8 @@ import validator from 'validator'
 import utils from '../utils'
 
 function twoDigits(d) {
-  if (0 <= d && d < 10) return '0' + d.toString()
-  if (-10 < d && d < 0) return '-0' + (-1 * d).toString()
+  if (d >= 0 && d < 10) return '0' + d.toString()
+  if (d > -10 && d < 0) return '-0' + (-1 * d).toString()
   return d.toString()
 }
 
@@ -273,6 +273,34 @@ export default function(router, db, cache) {
                 return obj
               }, {})
             )
+        }
+      )
+    }
+  )
+
+  /**
+   * Challenge submission
+   * @only user
+   *
+   * @param int     challengeId
+   * @param string  content
+   */
+
+  router.post(
+    '/challenge/submission/add',
+    utils(db, cache).restrictByUserRole('user'),
+    (req, res) => {
+      const { progressId, challengeId, content } = req.body
+
+      db.query(
+        `
+        INSERT INTO submission (progressId,content) VALUES (?,?)
+        `,
+        [progressId, content],
+        function(error, results, fields) {
+          if (error)
+            res.json({ status: 'error', msg: 'Unknown error', error: error })
+          else res.json({ status: 'success' })
         }
       )
     }
