@@ -16,7 +16,9 @@
           :to="{
             name: `assignment`,
             params: {
-               id : $route.params.id
+               id : $route.params.id,
+               startDate: $store.state.challenge.startDate,
+               finishDate: $store.state.challenge.finishDate
             }
            }"
         >
@@ -46,14 +48,17 @@
           </b-tab>
           <b-tab title="Participants">
             <b-card-group columns>
-              <template v-for="(participate,i) in participants" v-if="activeUser(participate.progress)">
+              <template
+                v-for="(participate,i) in participants"
+                v-if="activeUser(participate.progress)"
+              >
                 <b-card
                   :title="`${participate.name} ${participate.surname}`"
                   img-src="http://localhost:3000/icons/svg/042-winner.svg"
                   img-alt="Image"
                   img-width="50"
                   style="max-width: 20rem;"
-                  :key="i"                  
+                  :key="i"
                 >
                   <b-card-text>GaveUp: {{participate.progress | gaveUp}}</b-card-text>
                   <b-card-text>Completed: {{participate.progress | completed}}</b-card-text>
@@ -135,19 +140,18 @@ export default {
       return this.$store.state.challenge.reward
     },
     participants: function() {
-      console.log("degisti")
       return this.$store.state.challenge.participants
-    }    
+    }
   },
   components: { bravadoNavigation },
   destroyed() {
     this.$store.commit('challenge/RESET_ALL')
   },
   methods: {
-    activeUser: function (str) {
+    activeUser: function(str) {
       const obj = JSON.parse(`{${str}}`)
-      return obj.inProgress >= 1  ? true: false     
-    },    
+      return obj.inProgress >= 1 ? true : false
+    },
     ...mapActions({
       quitChallenge(dispatch) {
         let self = this
